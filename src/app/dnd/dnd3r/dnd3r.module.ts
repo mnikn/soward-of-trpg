@@ -1,3 +1,4 @@
+import { BaseComponentsModule } from './../../base/components/base-components.module';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { RoleCardListComponent } from './parts/role-card-list/role-card-list.component';
 
@@ -9,7 +10,8 @@ import { RoleCardComponent } from './pages/role-card/role-card.component';
 @NgModule({
   imports: [
     CommonModule,
-    NgZorroAntdModule
+    NgZorroAntdModule,
+    BaseComponentsModule
   ],
   declarations: [RoleCardComponent, ToolBarComponent, RoleCardListComponent],
   exports: [RoleCardComponent]
