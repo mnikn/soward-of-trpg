@@ -3,6 +3,8 @@ import { Observable } from 'rxjs';
 import { RoleBuilder } from '../factory/role-builder';
 import { Role } from '../models/role';
 import * as _ from 'lodash';
+import { AppContext } from '../../../base/constants/app-context';
+import { RoleFileService } from './role-file.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,14 +15,16 @@ export class RoleDataService {
   private _onDataCreatedCallback: (roles: Role) => void;
   private _onDataRemovedCallback: (removedId: number) => void;
 
-  constructor() {
+  constructor(private fileService: RoleFileService) {
   }
 
   public fetchRoles(): Observable<Role[]> {
     return new Observable<Role[]>((observer) => {
-      let roles = _.cloneDeep(this._roles);
-      observer.next(roles);
-      observer.complete();
+      this.fileService.readRoleFile().subscribe(roles => {
+        this._roles = roles;
+        observer.next(_.cloneDeep(roles));
+        observer.complete();
+      });
     });
   }
 
@@ -33,10 +37,18 @@ export class RoleDataService {
         .setId(id)
         .setBasicsInfo(`人物${id}`, 18, '一个战士')
         .build();
-      observer.next(role);
-      self._roles.push(role);
-      self.fireOnDataCreated(role);
-      observer.complete();
+      let resultRoles = self._roles.concat(role);
+      this.fileService.writeRoleFile(resultRoles).subscribe((success: boolean) => {
+        if (!success) {
+          observer.error('Create error!');
+          return;
+        }
+
+        self._roles = resultRoles;
+        observer.next(role);
+        self.fireOnDataCreated(role);
+        observer.complete();
+      });
     });
   }
 
@@ -44,8 +56,18 @@ export class RoleDataService {
     let self = this;
     return new Observable<number>((observer) => {
       observer.next(id);
-      _.remove(self._roles, role => role.id === id);
-      self.fireOnDataRemoved(id);
+      let resultRoles = self._roles.filter(role => role.id !== id);
+      this.fileService.writeRoleFile(resultRoles).subscribe((success: boolean) => {
+        if (!success) {
+          observer.error('Create error!');
+          return;
+        }
+
+        self._roles = resultRoles;
+        observer.next(id);
+        self.fireOnDataRemoved(id);
+        observer.complete();
+      });
       observer.complete();
     });
   }

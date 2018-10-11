@@ -1,0 +1,26 @@
+[
+  {
+    "id": "CLERIC",
+    "label": "牧师",
+    "hpDiceType": 6,
+    "skillPointIncrement": 8
+  },
+  {
+    "id": "FIGHTER",
+    "label": "战士",
+    "hpDiceType": 6,
+    "skillPointIncrement": 8
+  },
+  {
+    "id": "ROGUE",
+    "label": "游荡者",
+    "hpDiceType": 6,
+    "skillPointIncrement": 8
+  },
+  {
+    "id": "SORCERER",
+    "label": "术士",
+    "hpDiceType": 4,
+    "skillPointIncrement": 2
+  }
+]

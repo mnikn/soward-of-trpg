@@ -1,0 +1,9 @@
+[
+  {
+    "id": "RAPIER",
+    "label": "短剑",
+    "damageDiceNumber": 1,
+    "damageDiceValue": 4,
+    "damgeType": 1
+  }
+]

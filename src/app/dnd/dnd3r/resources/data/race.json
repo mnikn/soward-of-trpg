@@ -1,0 +1,18 @@
+[
+  {
+    "id": "HUMAN",
+    "label": "人类"
+  },
+  {
+    "id": "DWARF",
+    "label": "侏儒"
+  },
+  {
+    "id": "ELF",
+    "label": "精灵"
+  },
+  {
+    "id": "HALF_ELF",
+    "label": "半精灵"
+  }
+]
