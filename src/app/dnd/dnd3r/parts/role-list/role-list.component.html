@@ -1,0 +1,24 @@
+<nz-table #basicTable [nzData]="roles" [nzBordered]="false">
+  <thead>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of basicTable.data">
+    <td>
+      <nz-avatar [nzShape]="'circle'" [nzSize]="'large'" [nzIcon]="'anticon anticon-user'"></nz-avatar>
+      {{data.name}}
+    </td>
+    <td>
+      <span>{{data.description}}</span>
+    </td>
+    <td>
+      <app-tool-button-group [buttons]="actionButtons.get(data.id)">
+      </app-tool-button-group>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>

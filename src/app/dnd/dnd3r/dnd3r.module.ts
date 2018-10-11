@@ -1,6 +1,6 @@
 import { BaseComponentsModule } from './../../base/components/base-components.module';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
-import { RoleCardListComponent } from './parts/role-card-list/role-card-list.component';
+import { RoleListComponent } from './parts/role-list/role-list.component';
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -13,7 +13,7 @@ import { RoleCardComponent } from './pages/role-card/role-card.component';
     NgZorroAntdModule,
     BaseComponentsModule
   ],
-  declarations: [RoleCardComponent, ToolBarComponent, RoleCardListComponent],
+  declarations: [RoleCardComponent, ToolBarComponent, RoleListComponent],
   exports: [RoleCardComponent]
 })
 export class Dnd3rModule { }

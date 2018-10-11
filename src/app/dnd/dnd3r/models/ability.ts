@@ -23,7 +23,7 @@ export interface IAbilityInfo {
 }
 
 // let abilityDataPath = '/Users/zhengzhizhao/Local Documents/project/trpg-runner/src/dnd/resources/data/ability.json';
-export default class AbilityInfo {
+export class AbilityInfo {
 
     // public static readonly ABILITIES: IAbilityInfo[] = JSON.parse(fs.readFileSync(abilityDataPath).toString());
     public static readonly ABILITIES: IAbilityInfo[] = [];

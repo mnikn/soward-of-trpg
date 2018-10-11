@@ -1,3 +1,9 @@
-<button nz-button nzType="default" [nzSize]="small" nzShape="circle">
+<button nz-button nzType="default"
+        [nzSize]="small"
+        nzShape="circle"
+        nzPlacement="bottom"
+        nz-tooltip
+        nzTitle="{{model.tip}}"
+        (click)="model.onClick()">
   <i [class]="model.icon"></i>
 </button>

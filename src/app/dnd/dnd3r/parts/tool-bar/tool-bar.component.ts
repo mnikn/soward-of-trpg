@@ -1,5 +1,6 @@
 import { ToolButton } from './../../../../base/components/tool-button/tool-button';
 import { Component, OnInit } from '@angular/core';
+import { RoleDataService } from '../../services/role-data.service';
 
 @Component({
   selector: 'app-dnd3r-role-card-tool-bar',
@@ -9,10 +10,12 @@ import { Component, OnInit } from '@angular/core';
 export class ToolBarComponent implements OnInit {
 
   toolButtons: ToolButton[] = [
-    new ToolButton('anticon anticon-plus'),
-    new ToolButton('anticon anticon-minus')];
+    new ToolButton('anticon anticon-plus', 'Create', () => {
+      this.dataService.createRole().subscribe();
+    })];
 
-  constructor() { }
+  constructor(private dataService: RoleDataService) {
+  }
 
   ngOnInit() {
   }
