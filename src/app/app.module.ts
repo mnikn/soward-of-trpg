@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 /** 配置 angular i18n **/
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
+import { Dnd3rModule } from './dnd/dnd3r/dnd3r.module';
 registerLocaleData(zh);
 
 @NgModule({
@@ -20,7 +21,10 @@ registerLocaleData(zh);
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    NgZorroAntdModule
+    NgZorroAntdModule,
+
+    // app module
+    Dnd3rModule
   ],
   bootstrap: [AppComponent],
   providers: [{ provide: NZ_I18N, useValue: zh_CN }]
