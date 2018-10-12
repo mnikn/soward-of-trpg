@@ -1,0 +1,28 @@
+<nz-layout style="height: 100%">
+  <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="triggerTemplate">
+    <div class="logo">
+    </div>
+    <ul nz-menu [nzTheme]="'dark'" [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed">
+      <li nz-menu-item>
+        <span>
+          <i class="anticon anticon-home"></i>
+          <span class="nav-text">主页</span>
+        </span>
+      </li>
+      <li nz-menu-item>
+        <span>
+          <i class="anticon anticon-user"></i>
+          <span class="nav-text">人物卡</span>
+        </span>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <router-outlet></router-outlet>
+    <!--<app-dnd3r-role-card></app-dnd3r-role-card>-->
+    <nz-footer style="text-align: center;">©2018 Implement By mnikn</nz-footer>
+  </nz-layout>
+</nz-layout>
+<ng-template #trigger>
+  <i class="anticon anticon-up"></i>
+</ng-template>
