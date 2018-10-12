@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Role } from '../../models/role';
 import { RoleDataService } from '../../services/role-data.service';
 import { ToolButton } from '../../../../base/components/tool-button/tool-button';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dnd3r-role-list',
@@ -13,7 +14,7 @@ export class RoleListComponent implements OnInit {
   public roles: Role[] = [];
   public actionButtons: Map<number, ToolButton[]> = new Map();
 
-  constructor(private dataService: RoleDataService) {
+  constructor(private dataService: RoleDataService, private router: Router) {
   }
 
   ngOnInit() {
@@ -37,7 +38,7 @@ export class RoleListComponent implements OnInit {
 
   private createActionButtons(id: number): ToolButton[] {
     let actionButtons = [
-      new ToolButton('anticon anticon-edit', 'Edit'),
+      new ToolButton('anticon anticon-edit', 'Edit', () => this.router.navigate(['/dnd3r/role-editor', id])),
       new ToolButton('anticon anticon-minus', 'Delete', () => this.dataService.deleteRole(id).subscribe())
     ];
     return actionButtons;

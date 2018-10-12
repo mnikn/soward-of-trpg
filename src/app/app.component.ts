@@ -1,4 +1,4 @@
-import { Component, ViewChild, TemplateRef } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -6,12 +6,4 @@ import { Component, ViewChild, TemplateRef } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  isCollapsed = false;
-  triggerTemplate = null;
-  @ViewChild('trigger') customTrigger: TemplateRef<void>;
-
-  /** custom trigger can be TemplateRef **/
-  changeTrigger(): void {
-    this.triggerTemplate = this.customTrigger;
-  }
 }

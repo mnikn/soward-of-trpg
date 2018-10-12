@@ -28,6 +28,11 @@ export class RoleDataService {
     });
   }
 
+  public getRole(id: number): Role {
+    let role = _.find(this._roles, {id: id});
+    return role;
+  }
+
   public createRole(): Observable<Role> {
     let self = this;
     return new Observable<Role>((observer) => {

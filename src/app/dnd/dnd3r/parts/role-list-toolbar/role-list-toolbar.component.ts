@@ -1,13 +1,13 @@
-import { ToolButton } from './../../../../base/components/tool-button/tool-button';
+import { ToolButton } from '../../../../base/components/tool-button/tool-button';
 import { Component, OnInit } from '@angular/core';
 import { RoleDataService } from '../../services/role-data.service';
 
 @Component({
-  selector: 'app-dnd3r-role-card-tool-bar',
-  templateUrl: './tool-bar.component.html',
-  styleUrls: ['./tool-bar.component.css']
+  selector: 'app-dnd3r-role-card-toolbar',
+  templateUrl: './role-list-toolbar.component.html',
+  styleUrls: ['./role-list-toolbar.component.css']
 })
-export class ToolBarComponent implements OnInit {
+export class RoleListToolbarComponent implements OnInit {
 
   toolButtons: ToolButton[] = [
     new ToolButton('anticon anticon-plus', 'Create', () => {

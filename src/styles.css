@@ -1,5 +1,7 @@
 @import "../node_modules/ng-zorro-antd/ng-zorro-antd.min.css";
 
 body {
-    height: 100%;
+  height: 100%;
+  margin: 0;
+  background-color: #f0f2f5;
 }

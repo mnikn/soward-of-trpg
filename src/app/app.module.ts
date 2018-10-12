@@ -10,11 +10,14 @@ import { AppComponent } from './app.component';
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import { Dnd3rModule } from './dnd/dnd3r/dnd3r.module';
+import { AppRoutingModule } from './app-routing.module';
+import { MainComponent } from './components/main/main.component';
 registerLocaleData(zh);
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +27,8 @@ registerLocaleData(zh);
     NgZorroAntdModule,
 
     // app module
-    Dnd3rModule
+    Dnd3rModule,
+    AppRoutingModule
   ],
   bootstrap: [AppComponent],
   providers: [{ provide: NZ_I18N, useValue: zh_CN }]

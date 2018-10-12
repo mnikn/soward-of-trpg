@@ -1,0 +1,8 @@
+<ul nz-menu [nzTheme]="'dark'" [nzMode]="'horizontal'"
+    style="padding-left:16px;padding-right: 16px;line-height: 64px;">
+    <span *ngFor="let button of toolButtons">
+      <app-tool-button [model]="button"></app-tool-button>
+    </span>
+  <!--<app-tool-button-group [buttons]="toolButtons">-->
+  <!--</app-tool-button-group>-->
+</ul>
