@@ -23,16 +23,24 @@
                          [formControlName]="control.id"
                          [nzMode]="control.isMulti ? 'multiple' : 'default'"
                          [(ngModel)]="control.value"
+                         [nzDisabled]="control.readonly"
                          [nzAllowClear]="control.allowClear"
                          [nzPlaceHolder]="control.placeholder">
                 <div *ngFor="let option of control.options">
                   <nz-option [nzValue]="option" [nzLabel]="option.label"></nz-option>
                 </div>
               </nz-select>
+
+              <app-tool-button style="margin-left: 12px" *ngIf="control.editOnDrawerButton"
+                               [model]="control.editOnDrawerButton">
+              </app-tool-button>
             </nz-form-control>
           </nz-form-item>
         </div>
       </form>
     </nz-card>
   </div>
+  <app-dnd3r-profession-drawer [role]="role">
+  </app-dnd3r-profession-drawer>
 </div>
+

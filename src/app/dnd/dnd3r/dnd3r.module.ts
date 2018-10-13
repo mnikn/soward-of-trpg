@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { RoleEditorToolbarComponent } from './parts/role-editor-toolbar/role-editor-toolbar.component';
 import { RoleEditorComponent } from './parts/role-editor/role-editor.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProfessionDrawerComponent } from './parts/role-editor/parts/profession-drawer/profession-drawer.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     RoleListComponent,
     RoleEditorPageComponent,
     RoleEditorComponent,
-    RoleEditorToolbarComponent],
+    RoleEditorToolbarComponent,
+    ProfessionDrawerComponent],
   exports: [RoleCardComponent]
 })
 export class Dnd3rModule {

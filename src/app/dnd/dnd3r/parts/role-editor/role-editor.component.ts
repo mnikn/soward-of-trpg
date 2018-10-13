@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Role } from '../../models/role';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlignmentInfo } from '../../models/alignment';
@@ -7,6 +7,8 @@ import { BeliefInfo } from '../../models/belief';
 import { RaceInfo } from '../../models/race';
 import { LanguageInfo } from '../../models/language';
 import { ProfessionInfo } from '../../models/profession';
+import { ToolButton } from '../../../../base/components/tool-button/tool-button';
+import { ProfessionDrawerComponent } from './parts/profession-drawer/profession-drawer.component';
 
 @Component({
   selector: 'app-dnd3r-role-editor',
@@ -16,10 +18,12 @@ import { ProfessionInfo } from '../../models/profession';
 export class RoleEditorComponent implements OnInit {
 
   @Input() role: Role;
+  @ViewChild(ProfessionDrawerComponent) professionDrawer;
   validateForm: FormGroup;
-
-
   basicsInfoInputControls: any = [];
+  professionEditOnDrawerToolButton: ToolButton = new ToolButton('anticon anticon-edit', 'Edit professions', () => {
+    this.professionDrawer.openProfessionDrawer();
+  });
 
   constructor(private formBuilder: FormBuilder,
               private beliefInfo: BeliefInfo,
@@ -72,7 +76,9 @@ export class RoleEditorComponent implements OnInit {
       placeholder: '请选择职业...',
       value: this.role.professions,
       options: this.professionInfo.getProfessions(),
+      editOnDrawerButton: this.professionEditOnDrawerToolButton,
       isMulti: true,
+      readonly: true,
       allowClear: true
     }, {
       id: 'belief',
@@ -106,5 +112,4 @@ export class RoleEditorComponent implements OnInit {
       agree: [false]
     });
   }
-
 }

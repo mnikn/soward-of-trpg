@@ -1,0 +1,47 @@
+<nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom':'53px' }"
+           [nzMaskClosable]="false" [nzWidth]="720" [nzVisible]="isProfessionDrawerVisible" nzTitle="选择职业"
+           (nzOnClose)="closeProfessionDrawer()">
+  <div nz-row nzGutter="8">
+    <app-tool-button [model]="addNewProfessionToolButton">
+    </app-tool-button>
+    <nz-card *ngFor="let profession of currentProfessions" style="margin-top: 16px"
+             [nzExtra]="extraTemplate">
+      <form nz-form [formGroup]="professionDrawerForm">
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzFor="profession">职业</nz-form-label>
+            <nz-form-control>
+              <nz-select style="width: 100%"
+                         [(ngModel)]="profession.id"
+                         formControlName="profession">
+                <div *ngFor="let option of professions">
+                  <nz-option [nzValue]="option.id" [nzLabel]="option.label"></nz-option>
+                </div>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzFor="level">等级</nz-form-label>
+            <nz-form-control>
+              <nz-input-number
+                [(ngModel)]="profession.level"
+                formControlName="level" [nzMin]="1">
+              </nz-input-number>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </form>
+      <ng-template #extraTemplate>
+        <i class="anticon anticon-close clickable" (click)="removeProfession(profession)"></i>
+      </ng-template>
+    </nz-card>
+  </div>
+  <div class="footer">
+    <button type="button" (click)="cancel()" class="ant-btn" style="margin-right: 8px;">
+      <span>取消</span></button>
+    <button type="button" (click)="submit()" class="ant-btn ant-btn-primary"><span>提交</span>
+    </button>
+  </div>
+</nz-drawer>

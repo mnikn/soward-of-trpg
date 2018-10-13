@@ -8,6 +8,7 @@ export class RoleBuilder {
 
   constructor() {
     this._role = new Role();
+    this._role.professions = [];
   }
 
   public setId(id: number): RoleBuilder {

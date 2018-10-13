@@ -1,0 +1,7 @@
+.footer {
+  margin-top: 36px;
+}
+
+.clickable:hover {
+  cursor: pointer;
+}
