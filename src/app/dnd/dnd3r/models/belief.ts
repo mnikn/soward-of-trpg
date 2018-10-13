@@ -1,17 +1,34 @@
 import * as _ from 'lodash';
+import { FileService } from '../../../base/services/file.service';
+import { Injectable } from '@angular/core';
+import { AppContext } from '../../../base/constants/app-context';
 
 export interface Belief {
-    id: number;
-    label: string;
+  id: string;
+  label: string;
 }
 
-// let beliefDataPath = '/Users/zhengzhizhao/Local Documents/project/trpg-runner/src/dnd/resources/data/belief.json';
+@Injectable({
+  providedIn: 'root'
+})
 export class BeliefInfo {
 
-    // public static readonly BELIEFS: Belief[] = JSON.parse(fs.readFileSync(beliefDataPath).toString());
-    public static readonly BELIEFS: Belief[] = [];
+  constructor(private fileService: FileService) {
+  }
 
-    public static getBelief(id: number): Belief {
-        return _.find(BeliefInfo.BELIEFS, { id: id });
+  private _cache: Belief[] = null;
+
+  public getBelief(id: string): Belief {
+    return _.find(this._cache, {id: id});
+  }
+
+  public getBeliefs(): Belief[] {
+    if (this._cache === null) {
+      this._cache = JSON.parse(
+        this.fileService
+          .readFileSync(AppContext.getDnd3rData('belief'))
+          .toString());
     }
+    return this._cache;
+  }
 }

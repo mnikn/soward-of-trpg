@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
 
-export interface Shape {
+export interface Sex {
   id: string;
   label: string;
 }
@@ -9,19 +9,18 @@ export interface Shape {
 @Injectable({
   providedIn: 'root'
 })
+export class SexInfo {
 
-export class ShapeInfo {
-
-  private _cache: Shape[] = [
-    {id: 'SMALL', label: '小型'},
-    {id: 'MEDIUM', label: '中型'}
+  private _cache: Sex[] = [
+    {id: 'MALE', label: '男'},
+    {id: 'FEMALE', label: '女'}
   ];
 
-  public getShape(id: string): Shape {
+  public getSex(id: string): Sex {
     return _.find(this._cache, {id: id});
   }
 
-  public getShapes(): Shape[] {
+  public getSexs(): Sex[] {
     return this._cache;
   }
 }

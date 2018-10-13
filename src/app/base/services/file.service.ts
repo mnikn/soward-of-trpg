@@ -38,4 +38,8 @@ export class FileService {
       });
     });
   }
+
+  public readFileSync(path: string): any {
+    return fs.readFileSync(path, 'utf8');
+  }
 }

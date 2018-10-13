@@ -1,4 +1,4 @@
-import { BaseComponentsModule } from './../../base/components/base-components.module';
+import { BaseComponentsModule } from '../../base/components/base-components.module';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { RoleListComponent } from './parts/role-list/role-list.component';
 
@@ -10,13 +10,16 @@ import { RoleEditorPageComponent } from './pages/role-editor/role-editor-page.co
 import { RouterModule } from '@angular/router';
 import { RoleEditorToolbarComponent } from './parts/role-editor-toolbar/role-editor-toolbar.component';
 import { RoleEditorComponent } from './parts/role-editor/role-editor.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
     NgZorroAntdModule,
     BaseComponentsModule,
-    RouterModule
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   declarations: [
     RoleCardComponent,

@@ -1,17 +1,35 @@
 import * as _ from 'lodash';
+import { AppContext } from '../../../base/constants/app-context';
+import { FileService } from '../../../base/services/file.service';
+import { Injectable } from '@angular/core';
 
 export interface Race {
-    id: number;
-    label: string;
+  id: string;
+  label: string;
 }
 
-// let raceDataPath = '/Users/zhengzhizhao/Local Documents/project/trpg-runner/src/dnd/resources/data/race.json';
+@Injectable({
+  providedIn: 'root'
+})
 export class RaceInfo {
 
-    // public static readonly RACES: Race[] = JSON.parse(fs.readFileSync(raceDataPath).toString());
-    public static readonly RACES: Race[] = [];
+  public _cache: Race[] = null;
 
-    public static getRace(id: number): Race {
-        return _.find(RaceInfo.RACES, { id: id });
+  constructor(private fileService: FileService) {
+
+  }
+
+  public getRace(id: string): Race {
+    return _.find(this._cache, {id: id});
+  }
+
+  public getRaces(): Race[] {
+    if (this._cache === null) {
+      this._cache = JSON.parse(
+        this.fileService
+          .readFileSync(AppContext.getDnd3rData('race'))
+          .toString());
     }
+    return this._cache;
+  }
 }

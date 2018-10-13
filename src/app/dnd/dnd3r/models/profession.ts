@@ -1,19 +1,37 @@
 import * as _ from 'lodash';
+import { Injectable } from '@angular/core';
+import { FileService } from '../../../base/services/file.service';
+import { AppContext } from '../../../base/constants/app-context';
 
 export interface Profession {
-    id: string;
-    label: string;
-    hpDiceType: number;
-    skillPointIncrement: number;
+  id: string;
+  label: string;
+  hpDiceType: number;
+  skillPointIncrement: number;
 }
 
-// let professionDataPath = '/Users/zhengzhizhao/Local Documents/project/trpg-runner/src/dnd/resources/data/profession.json';
+@Injectable({
+  providedIn: 'root'
+})
 export class ProfessionInfo {
 
-    // public static readonly PROFESSIONS: Profession[] = JSON.parse(fs.readFileSync(professionDataPath).toString());
-    public static readonly PROFESSIONS: Profession[] = [];
 
-    public static getProfession(id: string): Profession {
-        return _.find(ProfessionInfo.PROFESSIONS, { id: id });
+  private _cache: Profession[] = null;
+
+  constructor(private fileService: FileService) {
+  }
+
+  public getProfession(id: string): Profession {
+    return _.find(this._cache, {id: id});
+  }
+
+  public getProfessions(): Profession[] {
+    if (this._cache === null) {
+      this._cache = JSON.parse(
+        this.fileService
+          .readFileSync(AppContext.getDnd3rData('profession'))
+          .toString());
     }
+    return this._cache;
+  }
 }

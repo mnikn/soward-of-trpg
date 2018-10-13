@@ -8,12 +8,14 @@ import { Language } from './language';
 import { Race } from './race';
 import { Ability } from './ability';
 import * as _ from 'lodash';
+import { Sex } from './sex';
 
 export class Role {
   public id: number;
   public name: string;
   public age: number;
   public description: string;
+  public sex: Sex;
 
   public abilities: Ability[];
   public race: Race;

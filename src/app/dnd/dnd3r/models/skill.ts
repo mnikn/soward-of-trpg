@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import { FileService } from '../../../base/services/file.service';
 
 export class Skill {
     public assignedPoint = 0;

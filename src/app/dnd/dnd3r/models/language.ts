@@ -1,22 +1,35 @@
 import * as _ from 'lodash';
+import { Injectable } from '@angular/core';
+import { FileService } from '../../../base/services/file.service';
+import { AppContext } from '../../../base/constants/app-context';
 
 export interface Language {
-    id: number;
-    label: string;
+  id: string;
+  label: string;
 }
 
-// let languageDataPath = '/Users/zhengzhizhao/Local Documents/project/trpg-runner/src/dnd/resources/data/language.json';
+@Injectable({
+  providedIn: 'root'
+})
 export class LanguageInfo {
 
-    // public static readonly LANGUAGES: Language[] = JSON.parse(fs.readFileSync(languageDataPath).toString());
-    public static readonly LANGUAGES: Language[] = [];
 
+  private _cache: Language[] = null;
 
-    public static getLanguage(id: number): Language {
-        return _.find(LanguageInfo.LANGUAGES, { id: id });
+  constructor(private fileService: FileService) {
+  }
+
+  public getLanguage(id: string): Language {
+    return _.find(this._cache, {id: id});
+  }
+
+  public getLanguages(): Language[] {
+    if (this._cache === null) {
+      this._cache = JSON.parse(
+        this.fileService
+          .readFileSync(AppContext.getDnd3rData('language'))
+          .toString());
     }
-
-    public static getLanguages(ids: number[]): Language[] {
-        return _.filter(LanguageInfo.LANGUAGES, lan => _.includes(ids, lan.id));
-    }
+    return this._cache;
+  }
 }

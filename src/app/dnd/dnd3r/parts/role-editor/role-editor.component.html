@@ -1,7 +1,38 @@
-<form nz-form>
-  <div nz-row nzGutter="16">
-    <div nz-col nzSpan="24">
-      <div>{{role.description}}</div>
-    </div>
+<div nz-row nzGutter="16">
+  <div nz-col nzSpan="24">
+    <nz-card className='basics-info-card' nzTitle="基本信息">
+      <form nz-form [formGroup]="validateForm">
+        <div nz-col [nzSpan]="12" *ngFor="let control of basicsInfoInputControls">
+          <nz-form-item nzFlex>
+            <nz-form-label [nzFor]="control.id">{{control.label}}</nz-form-label>
+            <nz-form-control>
+              <input *ngIf="control.type === 'text'" nz-input
+                     [placeholder]="control.placeholder"
+                     [type]="control.type"
+                     [formControlName]="control.id"
+                     [(value)]="control.value"/>
+              <nz-input-number *ngIf="control.type === 'number'"
+                               [nzPlaceHolder]="control.placeholder"
+                               [formControlName]="control.id"
+                               [nzMin]="1"
+                               [(ngModel)]="control.value">
+              </nz-input-number>
+
+              <nz-select *ngIf="control.type === 'select'"
+                         [ngStyle]="{'width':control.width? control.width + 'px' : 120+'px' }"
+                         [formControlName]="control.id"
+                         [nzMode]="control.isMulti ? 'multiple' : 'default'"
+                         [(ngModel)]="control.value"
+                         [nzAllowClear]="control.allowClear"
+                         [nzPlaceHolder]="control.placeholder">
+                <div *ngFor="let option of control.options">
+                  <nz-option [nzValue]="option" [nzLabel]="option.label"></nz-option>
+                </div>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </form>
+    </nz-card>
   </div>
-</form>
+</div>
