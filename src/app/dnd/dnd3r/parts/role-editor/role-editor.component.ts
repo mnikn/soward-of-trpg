@@ -68,9 +68,12 @@ export class RoleEditorComponent implements OnInit {
       id: 'profession',
       type: 'select',
       label: '职业',
+      width: 240,
       placeholder: '请选择职业...',
-      value: this.role.profession,
-      options: this.professionInfo.getProfessions()
+      value: this.role.professions,
+      options: this.professionInfo.getProfessions(),
+      isMulti: true,
+      allowClear: true
     }, {
       id: 'belief',
       type: 'select',

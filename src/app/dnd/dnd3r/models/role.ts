@@ -23,7 +23,7 @@ export class Role {
   public shape: Shape;
   public belief: Belief;
   public level: number;
-  public profession: Profession;
+  public professions: Profession[];
   public skills: Skill[];
   public languages: Language[];
 

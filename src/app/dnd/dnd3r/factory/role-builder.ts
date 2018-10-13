@@ -22,8 +22,8 @@ export class RoleBuilder {
     return this;
   }
 
-  public setProfession(profession: Profession): RoleBuilder {
-    this._role.profession = profession;
+  public setProfessions(professions: Profession[]): RoleBuilder {
+    this._role.professions = professions;
     return this;
   }
 
