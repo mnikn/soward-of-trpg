@@ -10,12 +10,14 @@
                      [placeholder]="control.placeholder"
                      [type]="control.type"
                      [formControlName]="control.id"
-                     [(value)]="control.value"/>
+                     [(ngModel)]="control.value"
+                     (change)="control.onChange(control.value)"/>
               <nz-input-number *ngIf="control.type === 'number'"
                                [nzPlaceHolder]="control.placeholder"
                                [formControlName]="control.id"
                                [nzMin]="1"
-                               [(ngModel)]="control.value">
+                               [(ngModel)]="control.value"
+                               (ngModelChange)="control.onChange(control.value)">
               </nz-input-number>
 
               <nz-select *ngIf="control.type === 'select'"
@@ -25,13 +27,15 @@
                          [(ngModel)]="control.value"
                          [nzDisabled]="control.readonly"
                          [nzAllowClear]="control.allowClear"
-                         [nzPlaceHolder]="control.placeholder">
+                         [nzPlaceHolder]="control.placeholder"
+                         (ngModelChange)="control.onChange(control.value)">
                 <div *ngFor="let option of control.options">
-                  <nz-option [nzValue]="option" [nzLabel]="option.label"></nz-option>
+                  <nz-option [nzValue]="option.id" [nzLabel]="option.label"></nz-option>
                 </div>
               </nz-select>
 
-              <app-tool-button style="margin-left: 12px" *ngIf="control.editOnDrawerButton"
+              <app-tool-button *ngIf="control.editOnDrawerButton"
+                               style="margin-left: 12px"
                                [model]="control.editOnDrawerButton">
               </app-tool-button>
             </nz-form-control>
@@ -40,7 +44,8 @@
       </form>
     </nz-card>
   </div>
-  <app-dnd3r-profession-drawer [role]="role">
+  <app-dnd3r-profession-drawer [defaultProfessions]="role.professions"
+                               (professionsChange)="updateProfessions($event)">
   </app-dnd3r-profession-drawer>
 </div>
 

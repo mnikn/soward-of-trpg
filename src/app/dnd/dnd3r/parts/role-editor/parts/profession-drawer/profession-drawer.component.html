@@ -9,11 +9,11 @@
       <form nz-form [formGroup]="professionDrawerForm">
         <div nz-col nzSpan="24">
           <nz-form-item>
-            <nz-form-label nzFor="profession">职业</nz-form-label>
+            <nz-form-label nzFor="drawerProfessionId">职业</nz-form-label>
             <nz-form-control>
               <nz-select style="width: 100%"
                          [(ngModel)]="profession.id"
-                         formControlName="profession">
+                         formControlName="drawerProfessionId">
                 <div *ngFor="let option of professions">
                   <nz-option [nzValue]="option.id" [nzLabel]="option.label"></nz-option>
                 </div>
@@ -23,11 +23,11 @@
         </div>
         <div nz-col nzSpan="24">
           <nz-form-item>
-            <nz-form-label nzFor="level">等级</nz-form-label>
+            <nz-form-label nzFor="drawerProfessionLevel">等级</nz-form-label>
             <nz-form-control>
               <nz-input-number
                 [(ngModel)]="profession.level"
-                formControlName="level" [nzMin]="1">
+                formControlName="drawerProfessionLevel" [nzMin]="1">
               </nz-input-number>
             </nz-form-control>
           </nz-form-item>

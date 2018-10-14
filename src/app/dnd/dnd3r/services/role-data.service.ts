@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 import { RoleBuilder } from '../factory/role-builder';
 import { Role } from '../models/role';
 import * as _ from 'lodash';
-import { AppContext } from '../../../base/constants/app-context';
 import { RoleFileService } from './role-file.service';
 
 @Injectable({
@@ -12,7 +11,8 @@ import { RoleFileService } from './role-file.service';
 export class RoleDataService {
 
   private _roles: Role[] = [];
-  private _onDataCreatedCallback: (roles: Role) => void;
+  private _onDataCreatedCallback: (role: Role) => void;
+  private _onDataUpdatedCallback: (role: Role) => void;
   private _onDataRemovedCallback: (removedId: number) => void;
 
   constructor(private fileService: RoleFileService) {
@@ -77,6 +77,25 @@ export class RoleDataService {
     });
   }
 
+  public updateRole(role: Role): Observable<Role> {
+    let self = this;
+    return new Observable<Role>((observer) => {
+      let resultRoles = _.map(self._roles, (item) => item.id === role.id ? role : item);
+      this.fileService.writeRoleFile(resultRoles).subscribe((success: boolean) => {
+        if (!success) {
+          observer.error('Update error!');
+          return;
+        }
+
+        self._roles = resultRoles;
+        observer.next(role);
+        self.fireOnDataUpdated(role);
+        observer.complete();
+      });
+      observer.complete();
+    });
+  }
+
   public registerOnDataCreated(callback: (role: Role) => void) {
     this._onDataCreatedCallback = callback;
   }
@@ -92,5 +111,13 @@ export class RoleDataService {
 
   public fireOnDataRemoved(removedId: number): void {
     this._onDataRemovedCallback(removedId);
+  }
+
+  public registerOnDataUpdated(callback: (role: Role) => void) {
+    this._onDataUpdatedCallback = callback;
+  }
+
+  public fireOnDataUpdated(role: Role): void {
+    this._onDataUpdatedCallback(role);
   }
 }

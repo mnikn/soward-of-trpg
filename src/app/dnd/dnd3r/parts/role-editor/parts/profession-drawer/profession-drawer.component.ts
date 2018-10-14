@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Role } from '../../../../models/role';
 import { IProfessionInfo, Profession, ProfessionInfo } from '../../../../models/profession';
 import { ToolButton } from '../../../../../../base/components/tool-button/tool-button';
+import * as _ from 'lodash';
+
 
 @Component({
   selector: 'app-dnd3r-profession-drawer',
@@ -11,15 +12,16 @@ import { ToolButton } from '../../../../../../base/components/tool-button/tool-b
 })
 export class ProfessionDrawerComponent implements OnInit {
 
+  @Input() defaultProfessions: Profession[];
+  @Output() professionsChange = new EventEmitter<Profession[]>();
 
-  @Input() role: Role;
+  currentProfessions: Profession[] = [];
   professionDrawerForm: FormGroup;
   professions: IProfessionInfo[];
   isProfessionDrawerVisible = false;
-  currentProfessions: Profession[] = [];
 
   addNewProfessionToolButton: ToolButton = new ToolButton('anticon anticon-plus', 'Add new profession', () => {
-    this.currentProfessions.push(new Profession('FIGHTER', 1));
+    this.addNewProfession();
   });
 
   constructor(private professionInfo: ProfessionInfo,
@@ -28,12 +30,12 @@ export class ProfessionDrawerComponent implements OnInit {
 
   ngOnInit() {
     this.professionDrawerForm = this.formBuilder.group({
-      profession: [null, [Validators.required]],
-      level: [null, [Validators.required]],
+      drawerProfessionId: [null, [Validators.required]],
+      drawerProfessionLevel: [null, [Validators.required]],
       agree: [false]
     });
     this.professions = this.professionInfo.getProfessions();
-    this.currentProfessions = this.role.professions ? this.role.professions : this.currentProfessions;
+    this.currentProfessions = this.defaultProfessions;
   }
 
   openProfessionDrawer(): void {
@@ -49,12 +51,17 @@ export class ProfessionDrawerComponent implements OnInit {
   }
 
   cancel(): void {
-    this.currentProfessions = this.role.professions ? this.role.professions : [];
+    this.currentProfessions = this.defaultProfessions;
     this.closeProfessionDrawer();
   }
 
   submit(): void {
+    this.professionsChange.emit(_.cloneDeep(this.currentProfessions));
     this.closeProfessionDrawer();
+  }
+
+  addNewProfession(): void {
+    this.currentProfessions.push(new Profession('FIGHTER', 1));
   }
 
 }

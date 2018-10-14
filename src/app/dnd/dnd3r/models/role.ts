@@ -1,33 +1,25 @@
-import { Weapon } from './weapon';
-import { Alignment } from './alignment';
-import { Shape } from './shape';
-import { Belief } from './belief';
-import { Skill } from './skill';
-import { Profession } from './profession';
-import { Language } from './language';
-import { Race } from './race';
 import { Ability } from './ability';
 import * as _ from 'lodash';
-import { Sex } from './sex';
+import { Profession } from './profession';
 
 export class Role {
   public id: number;
   public name: string;
   public age: number;
   public description: string;
-  public sex: Sex;
+  public sex: string;
 
   public abilities: Ability[];
-  public race: Race;
-  public alignment: Alignment;
-  public shape: Shape;
-  public belief: Belief;
+  public race: string;
+  public alignment: string;
+  public shape: string;
+  public belief: string;
   public level: number;
   public professions: Profession[];
-  public skills: Skill[];
-  public languages: Language[];
+  public skills: string[];
+  public languages: string[];
 
-  public weapons: Weapon[];
+  public weapons: string[];
 
   public getStr(): Ability {
     return _.find(this.abilities, {id: 'STRENGTH'});

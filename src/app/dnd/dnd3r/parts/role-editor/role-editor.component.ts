@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Role } from '../../models/role';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlignmentInfo } from '../../models/alignment';
@@ -6,9 +6,10 @@ import { SexInfo } from '../../models/sex';
 import { BeliefInfo } from '../../models/belief';
 import { RaceInfo } from '../../models/race';
 import { LanguageInfo } from '../../models/language';
-import { ProfessionInfo } from '../../models/profession';
+import { Profession, ProfessionInfo } from '../../models/profession';
 import { ToolButton } from '../../../../base/components/tool-button/tool-button';
 import { ProfessionDrawerComponent } from './parts/profession-drawer/profession-drawer.component';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-dnd3r-role-editor',
@@ -74,7 +75,7 @@ export class RoleEditorComponent implements OnInit {
       label: '职业',
       width: 240,
       placeholder: '请选择职业...',
-      value: this.role.professions,
+      value: _.map(this.role.professions, 'id'),
       options: this.professionInfo.getProfessions(),
       editOnDrawerButton: this.professionEditOnDrawerToolButton,
       isMulti: true,
@@ -100,6 +101,14 @@ export class RoleEditorComponent implements OnInit {
       isMulti: true,
       allowClear: true
     }];
+    _.forEach(this.basicsInfoInputControls, control => {
+      if (!control.readonly) {
+        control.onChange = (value: any) => this.role[control.id] = value;
+      } else {
+        control.onChange = () => {
+        };
+      }
+    });
     this.validateForm = this.formBuilder.group({
       name: [null, [Validators.required]],
       sex: [null, [Validators.required]],
@@ -111,5 +120,11 @@ export class RoleEditorComponent implements OnInit {
       alignment: [null, [Validators.required]],
       agree: [false]
     });
+  }
+
+  public updateProfessions(professions: Profession[]) {
+    this.role.professions = professions;
+    let professionControl: any = _.find(this.basicsInfoInputControls, {id: 'profession'});
+    professionControl.value = _.map(professions, 'id');
   }
 }

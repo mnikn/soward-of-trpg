@@ -30,6 +30,9 @@ export class RoleListComponent implements OnInit {
       self.roles = self.roles.concat(role);
       self.actionButtons.set(role.id, self.createActionButtons(role.id));
     });
+    this.dataService.registerOnDataUpdated((role) => {
+      self.roles = self.roles.map(item => item.id === role.id ? role : item);
+    });
     this.dataService.registerOnDataRemoved((id) => {
       self.roles = self.roles.filter(role => role.id !== id);
       self.actionButtons.delete(id);
