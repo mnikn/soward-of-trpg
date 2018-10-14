@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { IProfessionInfo, Profession, ProfessionInfo } from '../../../../models/profession';
 import { ToolButton } from '../../../../../../base/components/tool-button/tool-button';
 import * as _ from 'lodash';
@@ -15,7 +15,7 @@ export class ProfessionDrawerComponent implements OnInit {
   @Input() defaultProfessions: Profession[];
   @Output() professionsChange = new EventEmitter<Profession[]>();
 
-  currentProfessions: Profession[] = [];
+  professionDrawerControls = [];
   professionDrawerForm: FormGroup;
   professions: IProfessionInfo[];
   isProfessionDrawerVisible = false;
@@ -29,13 +29,18 @@ export class ProfessionDrawerComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.professionDrawerForm = this.formBuilder.group({
-      drawerProfessionId: [null, [Validators.required]],
-      drawerProfessionLevel: [null, [Validators.required]],
-      agree: [false]
-    });
     this.professions = this.professionInfo.getProfessions();
-    this.currentProfessions = this.defaultProfessions;
+    this.professionDrawerForm = this.formBuilder.group({});
+    for (let i = 0; i < this.defaultProfessions.length; ++i) {
+      this.professionDrawerControls = this.professionDrawerControls.concat([{
+        index: i,
+        professionId: this.defaultProfessions[i].id,
+        level: this.defaultProfessions[i].level
+      }]);
+      this.professionDrawerForm.addControl(`professionId${i}`, new FormControl());
+      this.professionDrawerForm.addControl(`level${i}`, new FormControl());
+    }
+
   }
 
   openProfessionDrawer(): void {
@@ -46,22 +51,43 @@ export class ProfessionDrawerComponent implements OnInit {
     this.isProfessionDrawerVisible = false;
   }
 
-  removeProfession(profession: Profession): void {
-    this.currentProfessions = this.currentProfessions.filter(p => p.id !== profession.id);
+  removeProfession(professionId: number): void {
+    let index = _.find(this.professionDrawerControls, (data) => data.professionId === professionId).index;
+    this.professionDrawerControls = this.professionDrawerControls.filter(p => p.professionId !== professionId);
+    this.professionDrawerForm.removeControl(`professionId${index}`);
+    this.professionDrawerForm.removeControl(`level${index}`);
   }
 
   cancel(): void {
-    this.currentProfessions = this.defaultProfessions;
+    this.professionDrawerForm = this.formBuilder.group({});
+    this.professionDrawerControls = [];
+    for (let i = 0; i < this.defaultProfessions.length; ++i) {
+      this.professionDrawerControls = this.professionDrawerControls.concat([{
+        index: i,
+        professionId: this.defaultProfessions[i].id,
+        level: this.defaultProfessions[i].level
+      }]);
+      this.professionDrawerForm.addControl(`professionId${i}`, new FormControl());
+      this.professionDrawerForm.addControl(`level${i}`, new FormControl());
+    }
     this.closeProfessionDrawer();
   }
 
   submit(): void {
-    this.professionsChange.emit(_.cloneDeep(this.currentProfessions));
+    let currentProfessions = _.map(this.professionDrawerControls, data => new Profession(data.professionId, data.level));
+    this.professionsChange.emit(currentProfessions);
     this.closeProfessionDrawer();
   }
 
   addNewProfession(): void {
-    this.currentProfessions.push(new Profession('FIGHTER', 1));
+    let newProfession = new Profession('FIGHTER', 1);
+    this.professionDrawerControls = this.professionDrawerControls.concat([{
+      index: this.professionDrawerControls.length + 1,
+      professionId: newProfession.id,
+      level: newProfession.level
+    }]);
+    this.professionDrawerForm.addControl(`professionId${this.professionDrawerControls.length}`, new FormControl());
+    this.professionDrawerForm.addControl(`level${this.professionDrawerControls.length}`, new FormControl());
   }
 
 }
