@@ -28,6 +28,36 @@ export class RoleBuilder {
     return this;
   }
 
+  public setRace(race: string): RoleBuilder {
+    this._role.race = race;
+    return this;
+  }
+
+  public setSex(sex: string): RoleBuilder {
+    this._role.sex = sex;
+    return this;
+  }
+
+  public setLanguages(languages: string[]): RoleBuilder {
+    this._role.languages = languages;
+    return this;
+  }
+
+  public setAlignment(alignment: string): RoleBuilder {
+    this._role.alignment = alignment;
+    return this;
+  }
+
+  public setBelief(belief: string): RoleBuilder {
+    this._role.belief = belief;
+    return this;
+  }
+
+  public setShape(shape: string): RoleBuilder {
+    this._role.shape = shape;
+    return this;
+  }
+
   public build(): Role {
     return _.cloneDeep(this._role);
   }

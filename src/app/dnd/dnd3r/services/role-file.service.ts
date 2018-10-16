@@ -34,6 +34,11 @@ export class RoleFileService {
               .setId(roleData.id)
               .setBasicsInfo(roleData.name, roleData.age, roleData.description)
               .setProfessions(roleData.professions)
+              .setRace(roleData.race)
+              .setAlignment(roleData.alignment)
+              .setBelief(roleData.belief)
+              .setLanguages(roleData.languages)
+              .setSex(roleData.sex)
               .build();
           });
           observer.next(roles);

@@ -91,7 +91,7 @@ export class RoleEditorComponent implements OnInit {
       options: this.beliefInfo.getBeliefs(),
       allowClear: true
     }, {
-      id: 'language',
+      id: 'languages',
       type: 'select',
       width: 240,
       label: '语言',
@@ -116,7 +116,7 @@ export class RoleEditorComponent implements OnInit {
       race: [null, [Validators.required]],
       profession: [null, [Validators.required]],
       belief: [null],
-      language: [null],
+      languages: [null],
       alignment: [null, [Validators.required]],
       agree: [false]
     });
