@@ -1,8 +1,8 @@
 <div nz-row nzGutter="16">
   <div nz-col nzSpan="24">
     <nz-card className='basics-info-card' nzTitle="基本信息">
-      <form nz-form [formGroup]="validateForm">
-        <div nz-col [nzSpan]="12" *ngFor="let control of basicsInfoInputControls">
+      <form nz-form [formGroup]="basicsInfoForm">
+        <div nz-col [nzSpan]="control.colSpan" *ngFor="let control of basicsInfoInputControls">
           <nz-form-item nzFlex>
             <nz-form-label [nzFor]="control.id">{{control.label}}</nz-form-label>
             <nz-form-control>
@@ -21,7 +21,7 @@
               </nz-input-number>
 
               <nz-select *ngIf="control.type === 'select'"
-                         [ngStyle]="{'width':control.width? control.width + 'px' : 120+'px' }"
+                         [ngStyle]="{'minWidth':control.minWidth? control.minWidth : 120+'px' }"
                          [formControlName]="control.id"
                          [nzMode]="control.isMulti ? 'multiple' : 'default'"
                          [(ngModel)]="control.value"
@@ -33,12 +33,20 @@
                   <nz-option [nzValue]="option.id" [nzLabel]="option.label"></nz-option>
                 </div>
               </nz-select>
+              <textarea *ngIf="control.type === 'textarea'"
+                        style="width: 500px"
+                        [formControlName]="control.id"
+                        [rows]="4"
+                        nz-input
+                        [(ngModel)]="control.value">
+              </textarea>
 
-              <app-tool-button *ngIf="control.editOnDrawerButton"
-                               style="margin-left: 12px"
-                               [model]="control.editOnDrawerButton">
-              </app-tool-button>
             </nz-form-control>
+
+            <app-tool-button *ngIf="control.editOnDrawerButton"
+                             [model]="control.editOnDrawerButton">
+            </app-tool-button>
+
           </nz-form-item>
         </div>
       </form>

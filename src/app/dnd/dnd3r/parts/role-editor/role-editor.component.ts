@@ -20,7 +20,7 @@ export class RoleEditorComponent implements OnInit {
 
   @Input() role: Role;
   @ViewChild(ProfessionDrawerComponent) professionDrawer;
-  validateForm: FormGroup;
+  basicsInfoForm: FormGroup;
   basicsInfoInputControls: any = [];
   professionEditOnDrawerToolButton: ToolButton = new ToolButton('anticon anticon-edit', 'Edit professions', () => {
     this.professionDrawer.openProfessionDrawer();
@@ -70,10 +70,10 @@ export class RoleEditorComponent implements OnInit {
       value: this.role.alignment,
       options: this.alignmentInfo.getAlignments()
     }, {
-      id: 'profession',
+      id: 'professions',
       type: 'select',
       label: '职业',
-      width: 240,
+      minWidth: 240 + 'px',
       placeholder: '请选择职业...',
       value: _.map(this.role.professions, 'id'),
       options: this.professionInfo.getProfessions(),
@@ -85,7 +85,7 @@ export class RoleEditorComponent implements OnInit {
       id: 'belief',
       type: 'select',
       label: '信仰',
-      width: 240,
+      minWidth: 240 + 'px',
       placeholder: '请选择信仰...',
       value: this.role.belief,
       options: this.beliefInfo.getBeliefs(),
@@ -93,13 +93,20 @@ export class RoleEditorComponent implements OnInit {
     }, {
       id: 'languages',
       type: 'select',
-      width: 240,
+      minWidth: 240 + 'px',
       label: '语言',
       placeholder: '请选择语言...',
       value: this.role.languages,
       options: this.languageInfo.getLanguages(),
       isMulti: true,
       allowClear: true
+    }, {
+      id: 'description',
+      type: 'textarea',
+      label: '人物描述',
+      placeholder: '请选择语言...',
+      value: this.role.description,
+      colSpan: 24
     }];
     _.forEach(this.basicsInfoInputControls, control => {
       if (!control.readonly) {
@@ -108,16 +115,18 @@ export class RoleEditorComponent implements OnInit {
         control.onChange = () => {
         };
       }
+      control.colSpan = control.colSpan ? control.colSpan : 12;
     });
-    this.validateForm = this.formBuilder.group({
+    this.basicsInfoForm = this.formBuilder.group({
       name: [null, [Validators.required]],
       sex: [null, [Validators.required]],
       age: [null, [Validators.required]],
       race: [null, [Validators.required]],
-      profession: [null, [Validators.required]],
+      professions: [null, [Validators.required]],
       belief: [null],
       languages: [null],
       alignment: [null, [Validators.required]],
+      description: [null],
       agree: [false]
     });
   }
