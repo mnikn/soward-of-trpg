@@ -1,0 +1,50 @@
+<form nz-form [formGroup]="formGroup">
+  <div nz-col [nzSpan]="control.colSpan" *ngFor="let control of formControls">
+    <nz-form-item nzFlex>
+      <nz-form-label [nzFor]="control.id">{{control.label}}</nz-form-label>
+      <nz-form-control>
+        <input *ngIf="control.type === 'text'" nz-input
+               [placeholder]="control.placeholder"
+               [type]="control.type"
+               [formControlName]="control.id"
+               [(ngModel)]="control.value"
+               (change)="control.onChange(control.value)"/>
+        <nz-input-number *ngIf="control.type === 'number'"
+                         [nzPlaceHolder]="control.placeholder"
+                         [formControlName]="control.id"
+                         [nzMin]="1"
+                         [(ngModel)]="control.value"
+                         (ngModelChange)="control.onChange(control.value)">
+        </nz-input-number>
+
+        <nz-select *ngIf="control.type === 'select'"
+                   [ngStyle]="{'minWidth':control.minWidth? control.minWidth : 120+'px' }"
+                   [formControlName]="control.id"
+                   [nzMode]="control.isMulti ? 'multiple' : 'default'"
+                   [(ngModel)]="control.value"
+                   [nzDisabled]="control.readonly"
+                   [nzAllowClear]="control.allowClear"
+                   [nzPlaceHolder]="control.placeholder"
+                   (ngModelChange)="control.onChange(control.value)">
+          <div *ngFor="let option of control.selectOptions">
+            <nz-option [nzValue]="option.id" [nzLabel]="option.label"></nz-option>
+          </div>
+        </nz-select>
+        <textarea *ngIf="control.type === 'textarea'"
+                  style="width: 500px"
+                  [formControlName]="control.id"
+                  [rows]="4"
+                  nz-input
+                  [(ngModel)]="control.value"
+                  (change)="control.onChange(control.value)">
+        </textarea>
+
+      </nz-form-control>
+
+      <app-tool-button *ngIf="control.toolButton"
+                       [model]="control.toolButton">
+      </app-tool-button>
+
+    </nz-form-item>
+  </div>
+</form>
