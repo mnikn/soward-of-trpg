@@ -59,8 +59,8 @@ export class RoleBuilder {
     return this;
   }
 
-  public setShape(shape: string): RoleBuilder {
-    this._role.shape = shape;
+  public setMaxHp(hp: number): RoleBuilder {
+    this._role.maxHp = hp;
     return this;
   }
 

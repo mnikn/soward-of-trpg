@@ -117,10 +117,9 @@ export class RoleEditorComponent implements OnInit {
       colSpan: 24
     });
     _.forEach(this.basicsInfoInputControls, control => {
-      if (!control.readonly && !control.onChange) {
+      if (!control.onChange) {
         control.onChange = (value: any) => this.role[control.id] = value;
       }
-      control.colSpan = control.colSpan ? control.colSpan : 12;
     });
     this.basicsInfoForm = this.formBuilder.group({
       name: [null, [Validators.required]],
@@ -196,6 +195,14 @@ export class RoleEditorComponent implements OnInit {
         onChange: (value: number) => {
           this.role.getCha().value = value;
         }
+      }, {
+        id: 'maxHp',
+        type: 'number',
+        label: '生命值',
+        value: this.role.maxHp,
+        readonly: true,
+        toolButton: new ToolButton('anticon anticon-setting', '生命值设置', () => {
+        })
       }];
     this.propertyForm = this.formBuilder.group({
       str: [null],
@@ -203,13 +210,13 @@ export class RoleEditorComponent implements OnInit {
       con: [null],
       int: [null],
       wis: [null],
-      cha: [null]
+      cha: [null],
+      maxHp: [null]
     });
     _.forEach(this.propertyFormControls, control => {
-      if (!control.readonly && !control.onChange) {
+      if (!control.onChange) {
         control.onChange = (value: any) => this.role[control.id] = value;
       }
-      control.colSpan = control.colSpan ? control.colSpan : 12;
     });
   }
 

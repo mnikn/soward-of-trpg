@@ -7,6 +7,7 @@
                [placeholder]="control.placeholder"
                [type]="control.type"
                [formControlName]="control.id"
+               [disabled]="control.readonly"
                [(ngModel)]="control.value"
                (change)="control.onChange(control.value)"/>
         <nz-input-number *ngIf="control.type === 'number'"
@@ -14,6 +15,7 @@
                          [formControlName]="control.id"
                          [nzMin]="1"
                          [(ngModel)]="control.value"
+                         [nzDisabled]="control.readonly"
                          (ngModelChange)="control.onChange(control.value)">
         </nz-input-number>
 
@@ -33,6 +35,7 @@
         <textarea *ngIf="control.type === 'textarea'"
                   style="width: 500px"
                   [formControlName]="control.id"
+                  [disabled]="control.readonly"
                   [rows]="4"
                   nz-input
                   [(ngModel)]="control.value"
@@ -41,7 +44,7 @@
 
       </nz-form-control>
 
-      <app-tool-button *ngIf="control.toolButton"
+      <app-tool-button style="margin-left: 16px; margin-top: 2px" *ngIf="control.toolButton"
                        [model]="control.toolButton">
       </app-tool-button>
 

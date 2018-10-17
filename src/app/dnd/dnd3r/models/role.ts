@@ -8,6 +8,7 @@ export class Role {
   public age: number;
   public description: string;
   public sex: string;
+  public maxHp: number;
 
   public abilities: Ability[];
   public race: string;

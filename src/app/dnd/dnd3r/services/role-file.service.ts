@@ -34,6 +34,7 @@ export class RoleFileService {
             return builder
               .setId(roleData.id)
               .setAbilities(this.abilityInfo.createAbilities(roleData.abilities))
+              .setMaxHp(roleData.maxHp)
               .setBasicsInfo(roleData.name, roleData.age, roleData.description)
               .setProfessions(roleData.professions)
               .setRace(roleData.race)
