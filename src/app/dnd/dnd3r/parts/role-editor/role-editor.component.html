@@ -38,7 +38,8 @@
                         [formControlName]="control.id"
                         [rows]="4"
                         nz-input
-                        [(ngModel)]="control.value">
+                        [(ngModel)]="control.value"
+                        (change)="control.onChange(control.value)">
               </textarea>
 
             </nz-form-control>
@@ -46,6 +47,49 @@
             <app-tool-button *ngIf="control.editOnDrawerButton"
                              [model]="control.editOnDrawerButton">
             </app-tool-button>
+
+          </nz-form-item>
+        </div>
+      </form>
+    </nz-card>
+  </div>
+
+  <div nz-col nzSpan="24" style="margin-top: 32px">
+    <nz-card className='property-card' nzTitle="属性技能">
+      <form nz-form [formGroup]="propertyForm">
+        <div nz-col [nzSpan]="control.colSpan" *ngFor="let control of propertyFormControls">
+          <nz-form-item nzFlex>
+            <nz-form-label [nzFor]="control.id">{{control.label}}</nz-form-label>
+            <nz-form-control>
+              <input *ngIf="control.type === 'text'" nz-input
+                     [placeholder]="control.placeholder"
+                     [type]="control.type"
+                     [formControlName]="control.id"
+                     [(ngModel)]="control.value"
+                     (change)="control.onChange(control.value)"/>
+              <nz-input-number *ngIf="control.type === 'number'"
+                               [nzPlaceHolder]="control.placeholder"
+                               [formControlName]="control.id"
+                               [nzMin]="1"
+                               [(ngModel)]="control.value"
+                               (ngModelChange)="control.onChange(control.value)">
+              </nz-input-number>
+
+              <nz-select *ngIf="control.type === 'select'"
+                         [ngStyle]="{'minWidth':control.minWidth? control.minWidth : 120+'px' }"
+                         [formControlName]="control.id"
+                         [nzMode]="control.isMulti ? 'multiple' : 'default'"
+                         [(ngModel)]="control.value"
+                         [nzDisabled]="control.readonly"
+                         [nzAllowClear]="control.allowClear"
+                         [nzPlaceHolder]="control.placeholder"
+                         (ngModelChange)="control.onChange(control.value)">
+                <div *ngFor="let option of control.options">
+                  <nz-option [nzValue]="option.id" [nzLabel]="option.label"></nz-option>
+                </div>
+              </nz-select>
+
+            </nz-form-control>
 
           </nz-form-item>
         </div>

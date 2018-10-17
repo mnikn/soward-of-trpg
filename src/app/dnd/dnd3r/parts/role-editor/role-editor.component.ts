@@ -10,6 +10,7 @@ import { Profession, ProfessionInfo } from '../../models/profession';
 import { ToolButton } from '../../../../base/components/tool-button/tool-button';
 import { ProfessionDrawerComponent } from './parts/profession-drawer/profession-drawer.component';
 import * as _ from 'lodash';
+import { AbilityInfo } from '../../models/ability';
 
 @Component({
   selector: 'app-dnd3r-role-editor',
@@ -22,6 +23,9 @@ export class RoleEditorComponent implements OnInit {
   @ViewChild(ProfessionDrawerComponent) professionDrawer;
   basicsInfoForm: FormGroup;
   basicsInfoInputControls: any = [];
+
+  propertyForm: FormGroup;
+  propertyFormControls: any = [];
   professionEditOnDrawerToolButton: ToolButton = new ToolButton('anticon anticon-edit', 'Edit professions', () => {
     this.professionDrawer.openProfessionDrawer();
   });
@@ -32,7 +36,8 @@ export class RoleEditorComponent implements OnInit {
               private professionInfo: ProfessionInfo,
               private raceInfo: RaceInfo,
               private languageInfo: LanguageInfo,
-              private alignmentInfo: AlignmentInfo) {
+              private alignmentInfo: AlignmentInfo,
+              private abilityInfo: AbilityInfo) {
   }
 
   ngOnInit() {
@@ -80,7 +85,9 @@ export class RoleEditorComponent implements OnInit {
       editOnDrawerButton: this.professionEditOnDrawerToolButton,
       isMulti: true,
       readonly: true,
-      allowClear: true
+      allowClear: true,
+      onChange: () => {
+      }
     }, {
       id: 'belief',
       type: 'select',
@@ -109,11 +116,8 @@ export class RoleEditorComponent implements OnInit {
       colSpan: 24
     }];
     _.forEach(this.basicsInfoInputControls, control => {
-      if (!control.readonly) {
+      if (!control.readonly && !control.onChange) {
         control.onChange = (value: any) => this.role[control.id] = value;
-      } else {
-        control.onChange = () => {
-        };
       }
       control.colSpan = control.colSpan ? control.colSpan : 12;
     });
@@ -128,6 +132,83 @@ export class RoleEditorComponent implements OnInit {
       alignment: [null, [Validators.required]],
       description: [null],
       agree: [false]
+    });
+
+    this.propertyFormControls = [
+      {
+        id: 'str',
+        type: 'number',
+        label: '力量',
+        placeholder: '请输入力量...',
+        value: this.role.getStr().value,
+        colSpan: 4,
+        onChange: (value: number) => {
+          this.role.getStr().value = value;
+        }
+      }, {
+        id: 'dex',
+        type: 'number',
+        label: '敏捷',
+        placeholder: '请输入敏捷...',
+        value: this.role.getDex().value,
+        colSpan: 4,
+        onChange: (value: number) => {
+          this.role.getDex().value = value;
+        }
+      }, {
+        id: 'con',
+        type: 'number',
+        label: '体质',
+        placeholder: '请输入体质...',
+        value: this.role.getCon().value,
+        colSpan: 4,
+        onChange: (value: number) => {
+          this.role.getCon().value = value;
+        }
+      }, {
+        id: 'wis',
+        type: 'number',
+        label: '意志',
+        placeholder: '请输入意志...',
+        value: this.role.getWis().value,
+        colSpan: 4,
+        onChange: (value: number) => {
+          this.role.getWis().value = value;
+        }
+      }, {
+        id: 'int',
+        type: 'number',
+        label: this.abilityInfo.abilities.INTELLIGENCE.label,
+        placeholder: '请输入智力...',
+        value: this.role.getInt().value,
+        colSpan: 4,
+        onChange: (value: number) => {
+          this.role.getInt().value = value;
+        }
+      }, {
+        id: 'cha',
+        type: 'number',
+        label: this.abilityInfo.abilities.CHARISMA.label,
+        placeholder: '请输入魅力...',
+        value: this.role.getCha().value,
+        colSpan: 4,
+        onChange: (value: number) => {
+          this.role.getCha().value = value;
+        }
+      }];
+    this.propertyForm = this.formBuilder.group({
+      str: [null],
+      dex: [null],
+      con: [null],
+      int: [null],
+      wis: [null],
+      cha: [null]
+    });
+    _.forEach(this.propertyFormControls, control => {
+      if (!control.readonly && !control.onChange) {
+        control.onChange = (value: any) => this.role[control.id] = value;
+      }
+      control.colSpan = control.colSpan ? control.colSpan : 12;
     });
   }
 

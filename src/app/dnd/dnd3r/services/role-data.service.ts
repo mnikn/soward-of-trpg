@@ -4,6 +4,7 @@ import { RoleBuilder } from '../factory/role-builder';
 import { Role } from '../models/role';
 import * as _ from 'lodash';
 import { RoleFileService } from './role-file.service';
+import { AbilityInfo } from '../models/ability';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class RoleDataService {
   private _onDataUpdatedCallback: (role: Role) => void;
   private _onDataRemovedCallback: (removedId: number) => void;
 
-  constructor(private fileService: RoleFileService) {
+  constructor(private fileService: RoleFileService,
+              private abilityInfo: AbilityInfo) {
   }
 
   public fetchRoles(): Observable<Role[]> {
@@ -40,6 +42,7 @@ export class RoleDataService {
       let id = _.last(self._roles) ? _.last(self._roles).id + 1 : 1;
       let role = builder
         .setId(id)
+        .setAbilities(this.abilityInfo.createAbilities())
         .setBasicsInfo(`人物${id}`, 18, '一个战士')
         .build();
       let resultRoles = self._roles.concat(role);

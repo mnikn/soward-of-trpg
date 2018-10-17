@@ -5,12 +5,13 @@ import { AppContext } from '../../../base/constants/app-context';
 import { Role } from '../models/role';
 import { RoleBuilder } from '../factory/role-builder';
 import * as _ from 'lodash';
+import { AbilityInfo } from '../models/ability';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoleFileService {
-  constructor(private baseFileService: FileService) {
+  constructor(private baseFileService: FileService, private abilityInfo: AbilityInfo) {
   }
 
   public writeRoleFile(role: Role[]): Observable<boolean> {
@@ -32,6 +33,7 @@ export class RoleFileService {
             let builder = new RoleBuilder();
             return builder
               .setId(roleData.id)
+              .setAbilities(this.abilityInfo.createAbilities(roleData.abilities))
               .setBasicsInfo(roleData.name, roleData.age, roleData.description)
               .setProfessions(roleData.professions)
               .setRace(roleData.race)

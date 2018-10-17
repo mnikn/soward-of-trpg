@@ -1,6 +1,7 @@
 import { Role } from '../models/role';
 import { Profession } from '../models/profession';
 import * as _ from 'lodash';
+import { Ability } from '../models/ability';
 
 export class RoleBuilder {
 
@@ -13,6 +14,11 @@ export class RoleBuilder {
 
   public setId(id: number): RoleBuilder {
     this._role.id = id;
+    return this;
+  }
+
+  public setAbilities(abilities: Ability[]) {
+    this._role.abilities = abilities;
     return this;
   }
 
