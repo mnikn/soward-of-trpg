@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
-import { Role } from '../../models/role';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { HpSettingsType, Role } from '../../models/role';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlignmentInfo } from '../../models/alignment';
 import { SexInfo } from '../../models/sex';
@@ -12,6 +12,8 @@ import { ProfessionDrawerComponent } from './parts/profession-drawer/profession-
 import * as _ from 'lodash';
 import { AbilityInfo } from '../../models/ability';
 import { FormControl } from '../../../../base/components/form/form-control';
+import { HpSettingsModalComponent } from './parts/hp-settings-modal/hp-settings-modal.component';
+import { RoleCalculateService } from '../../services/role-calculate.service';
 
 @Component({
   selector: 'app-dnd3r-role-editor',
@@ -22,6 +24,7 @@ export class RoleEditorComponent implements OnInit {
 
   @Input() role: Role;
   @ViewChild(ProfessionDrawerComponent) professionDrawer;
+  @ViewChild(HpSettingsModalComponent) hpSettingsModal;
   basicsInfoForm: FormGroup;
   basicsInfoInputControls: FormControl[] = [];
 
@@ -31,6 +34,9 @@ export class RoleEditorComponent implements OnInit {
     this.professionDrawer.openProfessionDrawer();
   });
 
+  HpSettingsType: any = HpSettingsType;
+
+
   constructor(private formBuilder: FormBuilder,
               private beliefInfo: BeliefInfo,
               private sexInfo: SexInfo,
@@ -38,7 +44,8 @@ export class RoleEditorComponent implements OnInit {
               private raceInfo: RaceInfo,
               private languageInfo: LanguageInfo,
               private alignmentInfo: AlignmentInfo,
-              private abilityInfo: AbilityInfo) {
+              private abilityInfo: AbilityInfo,
+              private calculateService: RoleCalculateService) {
   }
 
   ngOnInit() {
@@ -199,9 +206,10 @@ export class RoleEditorComponent implements OnInit {
         id: 'maxHp',
         type: 'number',
         label: '生命值',
-        value: this.role.maxHp,
+        value: this.calculateService.calculateMaxHp(this.role),
         readonly: true,
         toolButton: new ToolButton('anticon anticon-setting', '生命值设置', () => {
+          this.hpSettingsModal.showModal();
         })
       }];
     this.propertyForm = this.formBuilder.group({
@@ -222,7 +230,17 @@ export class RoleEditorComponent implements OnInit {
 
   public updateProfessions(professions: Profession[]) {
     this.role.professions = professions;
-    let professionControl: any = _.find(this.basicsInfoInputControls, {id: 'profession'});
+    let professionControl: any = _.find(this.basicsInfoInputControls, {id: 'professions'});
     professionControl.value = _.map(professions, 'id');
+
+    let maxHp = this.calculateService.calculateMaxHp(this.role);
+    _.find(this.propertyFormControls, {id: 'maxHp'}).value = maxHp;
+  }
+
+  updateHpSettings(data: any): void {
+    this.role.hpSettingsType = data.hpSettingsType;
+    this.role.customMaxHp = data.customMaxHp;
+    let maxHp = this.calculateService.calculateMaxHp(this.role);
+    _.find(this.propertyFormControls, {id: 'maxHp'}).value = maxHp;
   }
 }

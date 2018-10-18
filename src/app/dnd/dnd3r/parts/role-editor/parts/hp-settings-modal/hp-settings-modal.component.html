@@ -1,0 +1,17 @@
+<nz-modal [nzTitle]="'生命值设置'" [nzVisible]="isVisible"
+          (nzOnCancel)="closeModal()" (nzOnOk)="ok()">
+
+  <nz-radio-group [(ngModel)]="hpSettingsType">
+    <label nz-radio class="radio" [nzValue]="HpSettingsType.RADNOM">按职业生命骰随机</label>
+    <label nz-radio class="radio" [nzValue]="HpSettingsType.FULL">按职业生命骰取满</label>
+    <label nz-radio class="radio" [nzValue]="HpSettingsType.HALF">按职业生命骰取半</label>
+    <label nz-radio class="radio" [nzValue]="HpSettingsType.CUSTOM">
+      自定义：
+      <nz-input-number *ngIf="hpSettingsType===HpSettingsType.CUSTOM"
+                       style="width: 100px; margin-left: 10px;"
+                       [(ngModel)]="customMaxHp"
+                       [nzMin]="1" ngDefaultControl="true">
+      </nz-input-number>
+    </label>
+  </nz-radio-group>
+</nz-modal>

@@ -2,13 +2,21 @@ import { Ability } from './ability';
 import * as _ from 'lodash';
 import { Profession } from './profession';
 
+export enum HpSettingsType {
+  RADNOM,
+  FULL,
+  HALF,
+  CUSTOM
+}
+
 export class Role {
   public id: number;
   public name: string;
   public age: number;
   public description: string;
   public sex: string;
-  public maxHp: number;
+  public customMaxHp: number;
+  public hpSettingsType: HpSettingsType;
 
   public abilities: Ability[];
   public race: string;

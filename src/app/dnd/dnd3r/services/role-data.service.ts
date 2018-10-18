@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RoleBuilder } from '../factory/role-builder';
-import { Role } from '../models/role';
+import { HpSettingsType, Role } from '../models/role';
 import * as _ from 'lodash';
 import { RoleFileService } from './role-file.service';
 import { AbilityInfo } from '../models/ability';
@@ -42,7 +42,7 @@ export class RoleDataService {
       let id = _.last(self._roles) ? _.last(self._roles).id + 1 : 1;
       let role = builder
         .setId(id)
-        .setMaxHp(4)
+        .setHp(HpSettingsType.RADNOM)
         .setAbilities(this.abilityInfo.createAbilities())
         .setBasicsInfo(`人物${id}`, 18, '一个战士')
         .build();

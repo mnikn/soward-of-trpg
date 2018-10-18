@@ -18,5 +18,10 @@
   <app-dnd3r-profession-drawer [defaultProfessions]="role.professions"
                                (professionsChange)="updateProfessions($event)">
   </app-dnd3r-profession-drawer>
+
+  <app-dnd3r-hp-settings-modal [hpSettingsType]="role.hpSettingsType"
+                               [customMaxHp]="role.hpSettingsType === HpSettingsType.CUSTOM ? role.customMaxHp : null"
+                               (hpChange)="updateHpSettings($event)">
+  </app-dnd3r-hp-settings-modal>
 </div>
 
