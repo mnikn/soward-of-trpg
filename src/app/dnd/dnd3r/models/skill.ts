@@ -1,51 +1,50 @@
 import * as _ from 'lodash';
 import { FileService } from '../../../base/services/file.service';
+import { AppContext } from '../../../base/constants/app-context';
+import { Injectable } from '@angular/core';
 
 export class Skill {
-    public assignedPoint = 0;
-    public initialPoint = 0;
+  public id: string;
+  public assignedPoint = 0;
+  public initialPoint = 0;
 
-    public id: string;
-    public label: string;
-    public keyAbility: string;
-
-    constructor(skillInfo: any, assignedPoint: number = 0) {
-        this.id = skillInfo.id;
-        this.label = skillInfo.label;
-        this.keyAbility = skillInfo.keyAbility;
-        this.assignedPoint = assignedPoint;
-    }
+  constructor(id: string, assignedPoint: number = 0) {
+    this.id = id;
+    this.assignedPoint = assignedPoint;
+  }
 }
 
-interface ISkillInfo {
-    id: string;
-    label: string;
-    keyAbility: number;
-    class: string[];
-    crossClass: string[];
+export interface ISkillInfo {
+  id: string;
+  label: string;
+  keyAbility: string;
+  keyProfessions: string[];
+  crossClass: string[];
 }
 
-// let skillDataPath = '/Users/zhengzhizhao/Local Documents/project/trpg-runner/src/dnd/resources/data/skill.json';
+@Injectable({
+  providedIn: 'root'
+})
 export class SkillInfo {
 
-    // public static readonly SKILLS: ISkillInfo[] = JSON.parse(fs.readFileSync(skillDataPath).toString());
-    public static readonly SKILLS: ISkillInfo[] = [];
+  private _cache: ISkillInfo[] = null;
 
-    public static getSkillById(id: number): any {
-        return _.find(SkillInfo.SKILLS, { id: id });
-    }
+  constructor(private fileService: FileService) {
+  }
 
-    public static createSkills(): Skill[] {
-        let skills: Skill[] = [];
-        _.forEach(SkillInfo.SKILLS, (skill: any) => {
-            skills.push(new Skill(skill));
-        });
-        return skills;
-    }
+  public getSkill(id: string): ISkillInfo {
+    return _.find(this._cache, {id: id});
+  }
 
-    public static getSkillInfos(): any[] {
-        return SkillInfo.SKILLS;
+  public getSkills(): ISkillInfo[] {
+    if (this._cache === null) {
+      this._cache = JSON.parse(
+        this.fileService
+          .readFileSync(AppContext.getDnd3rData('skill'))
+          .toString());
     }
+    return this._cache;
+  }
 }
 
 

@@ -3,102 +3,98 @@
     "id": "APPRAISE",
     "label": "估价",
     "keyAbility": "INTELLIGENCE",
-    "class": [],
-    "crossClass": []
+    "crossClass": [],
+    "keyProfessions": []
   },
   {
     "id": "ANIMAL_EMPATHY",
     "label": "动物驯养",
     "keyAbility": "INTELLIGENCE",
-    "class": [],
+    "keyProfessions": [],
     "crossClass": []
   },
   {
     "id": "HIDE",
     "label": "躲藏",
     "keyAbility": "DEXTERITY",
-    "class": [],
+    "keyProfessions": [],
     "crossClass": []
   },
   {
     "id": "MOVE_SILENTLY",
     "label": "潜行",
     "keyAbility": "DEXTERITY",
-    "class": [],
+    "keyProfessions": [],
     "crossClass": []
   },
   {
     "id": "OPEN_LOCK",
     "label": "开锁",
     "keyAbility": "DEXTERITY",
-    "class": [],
+    "keyProfessions": [],
     "crossClass": []
   },
   {
     "id": "PICK_POCKET",
     "label": "偷窃",
     "keyAbility": "DEXTERITY",
-    "class": [],
+    "keyProfessions": [],
     "crossClass": []
   },
   {
     "id": "SEARCH",
     "label": "侦查",
     "keyAbility": "WISDOM",
-    "class": [],
+    "keyProfessions": [],
     "crossClass": []
   },
   {
     "id": "LISTEN",
     "label": "聆听",
     "keyAbility": "WISDOM",
-    "class": [],
+    "keyProfessions": [],
     "crossClass": []
   },
   {
     "id": "BALANCE",
     "label": "平衡",
     "keyAbility": "DEXTERITY",
-    "class": [],
+    "keyProfessions": [],
     "crossClass": []
   },
   {
     "id": "DISABLE_DEVICE",
     "label": "解除装置",
     "keyAbility": "INTELLIGENCE",
-    "class": [],
+    "keyProfessions": [],
     "crossClass": []
   },
   {
     "id": "INNUENDO",
     "label": "唬骗",
     "keyAbility": "CHARISMA",
-    "class": [],
+    "keyProfessions": [],
     "crossClass": []
   },
   {
     "id": "TUMBLE",
     "label": "翻滚",
     "keyAbility": "DEXTERITY",
-    "class": [],
+    "keyProfessions": [],
     "crossClass": []
   },
   {
     "id": "KNOWLEDGE_ARCANA",
     "label": "神秘知识",
     "keyAbility": "INTELLIGENCE",
-    "class": [
-      "CLERIC"
-    ],
+    "keyProfessions": ["CLERIC"],
     "crossClass": []
   },
   {
     "id": "CONCENTRATION",
     "label": "专注",
     "keyAbility": "CONSTITUTION",
-    "class": [
-      "CLERIC"
-    ],
+    "keyProfessions": ["CLERIC"],
     "crossClass": []
   }
 ]

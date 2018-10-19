@@ -1,6 +1,6 @@
 <div nz-row nzGutter="16">
   <div nz-col nzSpan="24">
-    <nz-card className='basics-info-card' nzTitle="基本信息">
+    <nz-card class='form-card' nzTitle="基本信息">
       <app-form [formGroup]="basicsInfoForm"
                 [formControls]="basicsInfoInputControls">
       </app-form>
@@ -8,11 +8,54 @@
   </div>
 
   <div nz-col nzSpan="24" style="margin-top: 32px">
-    <nz-card className='property-card' nzTitle="属性技能">
+    <nz-card class='form-card' nzTitle="属性技能">
 
       <app-form [formGroup]="propertyForm"
                 [formControls]="propertyFormControls">
       </app-form>
+
+      <div>
+        剩余技能点：
+        <nz-input-number [nzMin]="0" ngDefaultControl="true" [nzDisabled]="true">
+        </nz-input-number>
+      </div>
+
+      <nz-tabset>
+        <div *ngFor="let profession of role.professions">
+          <nz-tab [nzTitle]="professionInfo.getProfession(profession.id).label">
+            <div style="margin-bottom: 16px">
+              剩余技能点：
+              <nz-input-number [nzMin]="0" ngDefaultControl="true" [nzDisabled]="true">
+              </nz-input-number>
+            </div>
+            <nz-table #basicTable [nzData]="role.skills">
+              <thead>
+              <tr>
+                <th>技能</th>
+                <th>关键属性</th>
+                <th>是否本职</th>
+                <th>分配点数</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let data of basicTable.data">
+                <td>{{skillInfo.getSkill(data.id).label}}</td>
+                <td>{{abilityInfo.getAbility(skillInfo.getSkill(data.id).keyAbility).label}}</td>
+                <td>
+                  <label nz-checkbox [nzDisabled]="true"
+                         [ngModel]="!!skillInfo.getSkill(data.id).keyProfessions.includes(profession.id)">
+                  </label>
+                </td>
+                <td>
+                  <nz-input-number [nzMin]="0" ngDefaultControl="true" [(ngModel)]="data.assignedPoint">
+                  </nz-input-number>
+                </td>
+              </tr>
+              </tbody>
+            </nz-table>
+          </nz-tab>
+        </div>
+      </nz-tabset>
     </nz-card>
   </div>
   <app-dnd3r-profession-drawer [defaultProfessions]="role.professions"

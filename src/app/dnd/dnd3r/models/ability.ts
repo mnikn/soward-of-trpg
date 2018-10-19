@@ -57,6 +57,10 @@ export class AbilityInfo {
   constructor(private fileService: FileService) {
   }
 
+  public getAbility(id: string): IAbilityInfo {
+    return _.find(this.abilities, {id: id});
+  }
+
   public createAbilities(data: any = [{
     id: this.abilities.STRENGTH.id
   }, {

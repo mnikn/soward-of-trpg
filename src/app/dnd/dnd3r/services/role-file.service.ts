@@ -6,6 +6,7 @@ import { Role } from '../models/role';
 import { RoleBuilder } from '../factory/role-builder';
 import * as _ from 'lodash';
 import { AbilityInfo } from '../models/ability';
+import { Skill } from '../models/skill';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +43,7 @@ export class RoleFileService {
               .setBelief(roleData.belief)
               .setLanguages(roleData.languages)
               .setSex(roleData.sex)
+              .setSkills(roleData.skills.map(e => new Skill(e.id, e.assignedPoint)))
               .build();
           });
           observer.next(roles);

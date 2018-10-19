@@ -1,6 +1,7 @@
 import { Ability } from './ability';
 import * as _ from 'lodash';
 import { Profession } from './profession';
+import { Skill } from './skill';
 
 export enum HpSettingsType {
   RADNOM,
@@ -25,7 +26,7 @@ export class Role {
   public belief: string;
   public level: number;
   public professions: Profession[];
-  public skills: string[];
+  public skills: Skill[] = [];
   public languages: string[];
 
   public weapons: string[];

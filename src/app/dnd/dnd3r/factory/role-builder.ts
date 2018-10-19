@@ -2,6 +2,7 @@ import { HpSettingsType, Role } from '../models/role';
 import { Profession } from '../models/profession';
 import * as _ from 'lodash';
 import { Ability } from '../models/ability';
+import { Skill } from '../models/skill';
 
 export class RoleBuilder {
 
@@ -62,6 +63,11 @@ export class RoleBuilder {
   public setHp(hpSettingsType: HpSettingsType, maxHp?: number): RoleBuilder {
     this._role.hpSettingsType = hpSettingsType;
     this._role.customMaxHp = maxHp;
+    return this;
+  }
+
+  public setSkills(skills: Skill[]): RoleBuilder {
+    this._role.skills = skills;
     return this;
   }
 

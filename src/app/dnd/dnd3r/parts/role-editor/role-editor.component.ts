@@ -14,6 +14,7 @@ import { AbilityInfo } from '../../models/ability';
 import { FormControl } from '../../../../base/components/form/form-control';
 import { HpSettingsModalComponent } from './parts/hp-settings-modal/hp-settings-modal.component';
 import { RoleCalculateService } from '../../services/role-calculate.service';
+import { ISkillInfo, SkillInfo } from '../../models/skill';
 
 @Component({
   selector: 'app-dnd3r-role-editor',
@@ -36,15 +37,18 @@ export class RoleEditorComponent implements OnInit {
 
   HpSettingsType: any = HpSettingsType;
 
+  skillSet: ISkillInfo[] = [];
+
 
   constructor(private formBuilder: FormBuilder,
               private beliefInfo: BeliefInfo,
               private sexInfo: SexInfo,
-              private professionInfo: ProfessionInfo,
+              public professionInfo: ProfessionInfo,
               private raceInfo: RaceInfo,
               private languageInfo: LanguageInfo,
               private alignmentInfo: AlignmentInfo,
-              private abilityInfo: AbilityInfo,
+              public abilityInfo: AbilityInfo,
+              public skillInfo: SkillInfo,
               private calculateService: RoleCalculateService) {
   }
 
@@ -208,6 +212,7 @@ export class RoleEditorComponent implements OnInit {
         label: '生命值',
         value: this.calculateService.calculateMaxHp(this.role),
         readonly: true,
+        colSpan: 24,
         toolButton: new ToolButton('anticon anticon-setting', '生命值设置', () => {
           this.hpSettingsModal.showModal();
         })
@@ -226,6 +231,8 @@ export class RoleEditorComponent implements OnInit {
         control.onChange = (value: any) => this.role[control.id] = value;
       }
     });
+
+    this.skillSet = this.skillInfo.getSkills();
   }
 
   public updateProfessions(professions: Profession[]) {
