@@ -13,6 +13,7 @@ import { RoleEditorComponent } from './parts/role-editor/role-editor.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfessionDrawerComponent } from './parts/role-editor/parts/profession-drawer/profession-drawer.component';
 import { HpSettingsModalComponent } from './parts/role-editor/parts/hp-settings-modal/hp-settings-modal.component';
+import { SkillTableComponent } from './parts/role-editor/parts/skill-table/skill-table.component';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { HpSettingsModalComponent } from './parts/role-editor/parts/hp-settings-
     RoleEditorComponent,
     RoleEditorToolbarComponent,
     ProfessionDrawerComponent,
-    HpSettingsModalComponent],
+    HpSettingsModalComponent,
+    SkillTableComponent],
   exports: [RoleCardComponent]
 })
 export class Dnd3rModule {

@@ -1,0 +1,40 @@
+<nz-tabset>
+  <div *ngFor="let profession of role.professions">
+    <nz-tab [nzTitle]="professionInfo.getProfession(profession.id).label">
+      <div style="margin-bottom: 16px">
+        剩余技能点：
+        <nz-input-number [(ngModel)]="profession.remainSkillPoints"
+                         ngDefaultControl="true" [nzDisabled]="true">
+        </nz-input-number>
+      </div>
+      <nz-table #basicTable [nzData]="role.skills">
+        <thead>
+        <tr>
+          <th>技能</th>
+          <th>关键属性</th>
+          <th>是否本职</th>
+          <th>分配点数</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of basicTable.data">
+          <td>{{skillInfo.getSkill(data.id).label}}</td>
+          <td>{{abilityInfo.getAbility(skillInfo.getSkill(data.id).keyAbility).label}}</td>
+          <td>
+            <label nz-checkbox [nzDisabled]="true"
+                   [ngModel]="!!skillInfo.getSkill(data.id).keyProfessions.includes(profession.id)">
+            </label>
+          </td>
+          <td>
+            <nz-input-number [nzMin]="0"
+                             ngDefaultControl="true"
+                             [(ngModel)]="data.professionsAssignedPoint[profession.id]"
+                             (ngModelChange)="onSkillPointAssigned.emit({profession: profession, isIncrement: true})">
+            </nz-input-number>
+          </td>
+        </tr>
+        </tbody>
+      </nz-table>
+    </nz-tab>
+  </div>
+</nz-tabset>
