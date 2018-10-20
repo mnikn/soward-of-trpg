@@ -4,18 +4,21 @@ import { FileService } from '../../../base/services/file.service';
 import { AppContext } from '../../../base/constants/app-context';
 
 export class Profession {
-  public level: number;
   readonly id: string;
+  public level: number;
+  public remainSkillPoints: number;
 
-  constructor(id?: string, level?: number) {
+  constructor(id?: string, level?: number, remainSkillPoints?: number) {
     this.id = id;
     this.level = level;
+    this.remainSkillPoints = remainSkillPoints;
   }
 }
 
 export interface IProfessionInfo {
   id: string;
   label: string;
+  keyAbility: string;
   hpDiceType: number;
   skillPointIncrement: number;
 }

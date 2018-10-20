@@ -5,12 +5,14 @@ import { Injectable } from '@angular/core';
 
 export class Skill {
   public id: string;
-  public assignedPoint = 0;
-  public initialPoint = 0;
+  public professionsAssignedPoint: Map<string, number>;
 
-  constructor(id: string, assignedPoint: number = 0) {
+  constructor(id: string, professionsAssignedPoint?: Map<string, number>) {
     this.id = id;
-    this.assignedPoint = assignedPoint;
+    if (!professionsAssignedPoint) {
+      professionsAssignedPoint = new Map<string, number>();
+    }
+    this.professionsAssignedPoint = professionsAssignedPoint;
   }
 }
 

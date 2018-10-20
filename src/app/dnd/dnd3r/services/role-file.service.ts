@@ -43,7 +43,7 @@ export class RoleFileService {
               .setBelief(roleData.belief)
               .setLanguages(roleData.languages)
               .setSex(roleData.sex)
-              .setSkills(roleData.skills.map(e => new Skill(e.id, e.assignedPoint)))
+              .setSkills(roleData.skills.map(e => new Skill(e.id, e.professionsAssignedPoint)))
               .build();
           });
           observer.next(roles);

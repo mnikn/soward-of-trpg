@@ -3,24 +3,28 @@
     "id": "CLERIC",
     "label": "牧师",
     "hpDiceType": 6,
-    "skillPointIncrement": 8
+    "skillPointIncrement": 8,
+    "keyAbility": "WISDOM"
   },
   {
     "id": "FIGHTER",
     "label": "战士",
     "hpDiceType": 6,
-    "skillPointIncrement": 8
+    "skillPointIncrement": 8,
+    "keyAbility": "STRENGTH"
   },
   {
     "id": "ROGUE",
     "label": "游荡者",
     "hpDiceType": 6,
-    "skillPointIncrement": 8
+    "skillPointIncrement": 8,
+    "keyAbility": "STRENGTH"
   },
   {
     "id": "SORCERER",
     "label": "术士",
     "hpDiceType": 4,
-    "skillPointIncrement": 2
+    "skillPointIncrement": 2,
+    "keyAbility": "CHARISMA"
   }
 ]

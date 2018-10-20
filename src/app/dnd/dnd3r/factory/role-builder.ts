@@ -31,7 +31,7 @@ export class RoleBuilder {
   }
 
   public setProfessions(professions: Profession[]): RoleBuilder {
-    this._role.professions = _.map(professions, (data) => new Profession(data.id, data.level));
+    this._role.professions = _.map(professions, (data) => new Profession(data.id, data.level, data.remainSkillPoints));
     return this;
   }
 

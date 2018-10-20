@@ -236,6 +236,17 @@ export class RoleEditorComponent implements OnInit {
   }
 
   public updateProfessions(professions: Profession[]) {
+    _.forEach(professions, (profession, index) => {
+      profession.remainSkillPoints = _.range(0, profession.level + 1).reduce((result, level) => {
+        let professionInfo = this.professionInfo.getProfession(profession.id);
+        let incrementSkillPoint = (professionInfo.skillPointIncrement + this.role.getInt().getModifier());
+        if (level === 1 && index === 0) {
+          return result + incrementSkillPoint * 4;
+        } else {
+          return result + incrementSkillPoint;
+        }
+      });
+    });
     this.role.professions = professions;
     let professionControl: any = _.find(this.basicsInfoInputControls, {id: 'professions'});
     professionControl.value = _.map(professions, 'id');
@@ -249,5 +260,13 @@ export class RoleEditorComponent implements OnInit {
     this.role.customMaxHp = data.customMaxHp;
     let maxHp = this.calculateService.calculateMaxHp(this.role);
     _.find(this.propertyFormControls, {id: 'maxHp'}).value = maxHp;
+  }
+
+  public updateProfessionSkillPoint(profession: Profession, isIncrement: boolean, step = 1) {
+    if (isIncrement) {
+      profession.remainSkillPoints -= step;
+    } else {
+      profession.remainSkillPoints += step;
+    }
   }
 }
