@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HpSettingsType, Role } from '../models/role';
 import { Profession, ProfessionInfo } from '../models/profession';
-import { Skill } from '../models/skill';
+import { Skill, SkillInfo } from '../models/skill';
 import * as _ from 'lodash';
 
 @Injectable({
@@ -9,7 +9,7 @@ import * as _ from 'lodash';
 })
 export class RoleCalculateService {
 
-  constructor(private professionInfo: ProfessionInfo) {
+  constructor(private professionInfo: ProfessionInfo, private skillInfo: SkillInfo) {
   }
 
   public calculateMaxHp(role: Role) {
@@ -51,11 +51,18 @@ export class RoleCalculateService {
 
   public calculateProfessionRemainSkillPoint(profession: Profession, modifier: number, skills: Skill[]) {
     let totalSkillPoints = this.calculateProfessionTotalSkillPoint(profession, modifier);
-    let assignedPoints = _.sumBy(_.map(skills, 'professionsAssignedPoint'), profession.id);
+    let assignedPoints = 0;
+    for (let skill of skills) {
+      let assignedPoint = skill.professionsAssignedPoint[profession.id];
+      if (!this.skillInfo.getSkill(skill.id).keyProfessions.includes(profession.id)) {
+        assignedPoint *= 2;
+      }
+      assignedPoints += assignedPoint;
+    }
     return totalSkillPoints - assignedPoints;
   }
 
-  public calculateAbilityModifer(value: number): number {
+  public calculateAbilityModifier(value: number): number {
     return Math.round((value - 10) / 2);
   }
 }
