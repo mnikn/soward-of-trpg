@@ -1,35 +1,17 @@
-import * as _ from 'lodash';
-import { AppContext } from '../../../base/constants/app-context';
 import { FileService } from '../../../base/services/file.service';
 import { Injectable } from '@angular/core';
+import { BaseDnd3rInfoData, BaseDnd3rInfoItem } from './base-dnd3r-info-data';
 
-export interface Race {
-  id: string;
+export interface RaceInfoItem extends BaseDnd3rInfoItem {
   label: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
-export class RaceInfo {
-
-  public _cache: Race[] = null;
+export class RaceInfo extends BaseDnd3rInfoData<RaceInfoItem> {
 
   constructor(private fileService: FileService) {
-
-  }
-
-  public getRace(id: string): Race {
-    return _.find(this._cache, {id: id});
-  }
-
-  public getRaces(): Race[] {
-    if (this._cache === null) {
-      this._cache = JSON.parse(
-        this.fileService
-          .readFileSync(AppContext.getDnd3rData('race'))
-          .toString());
-    }
-    return this._cache;
+    super(fileService, 'race');
   }
 }

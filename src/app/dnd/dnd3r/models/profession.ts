@@ -1,8 +1,7 @@
 import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
 import { FileService } from '../../../base/services/file.service';
-import { AppContext } from '../../../base/constants/app-context';
-import { BaseDnd3rInfo, BaseDnd3rInfoItem } from './base-dnd3r-info';
+import { BaseDnd3rInfoData, BaseDnd3rInfoItem } from './base-dnd3r-info-data';
 
 export class Profession {
   readonly id: string;
@@ -25,23 +24,9 @@ export interface ProfessionInfoItem extends BaseDnd3rInfoItem {
 @Injectable({
   providedIn: 'root'
 })
-export class ProfessionInfo extends BaseDnd3rInfo<ProfessionInfoItem> {
+export class ProfessionInfo extends BaseDnd3rInfoData<ProfessionInfoItem> {
 
   constructor(private fileService: FileService) {
     super(fileService, 'profession');
   }
-
-  // public getProfessionInfo(id: string): IProfessionInfo {
-  //   return _.find(this._cache, {id: id});
-  // }
-  //
-  // public getProfessionsInfo(): IProfessionInfo[] {
-  //   if (this._cache === null) {
-  //     this._cache = JSON.parse(
-  //       this.fileService
-  //         .readFileSync(AppContext.getDnd3rData('profession'))
-  //         .toString());
-  //   }
-  //   return this._cache;
-  // }
 }

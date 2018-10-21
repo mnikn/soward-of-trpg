@@ -86,7 +86,7 @@ export class RoleEditorComponent implements OnInit {
       label: '种族',
       placeholder: '请选择种族...',
       value: this.role.race,
-      selectOptions: this.raceInfo.getRaces()
+      selectOptions: this.raceInfo.getInfoList()
     }, {
       id: 'alignment',
       type: 'select',
@@ -115,7 +115,7 @@ export class RoleEditorComponent implements OnInit {
       minWidth: 240 + 'px',
       placeholder: '请选择信仰...',
       value: this.role.belief,
-      selectOptions: this.beliefInfo.getBeliefs(),
+      selectOptions: this.beliefInfo.getInfoList(),
       allowClear: true
     }, {
       id: 'languages',

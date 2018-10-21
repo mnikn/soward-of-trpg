@@ -1,34 +1,17 @@
-import * as _ from 'lodash';
 import { FileService } from '../../../base/services/file.service';
 import { Injectable } from '@angular/core';
-import { AppContext } from '../../../base/constants/app-context';
+import { BaseDnd3rInfoData, BaseDnd3rInfoItem } from './base-dnd3r-info-data';
 
-export interface Belief {
-  id: string;
+export interface BeliefInfoItem extends BaseDnd3rInfoItem {
   label: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
-export class BeliefInfo {
+export class BeliefInfo extends BaseDnd3rInfoData<BeliefInfoItem> {
 
   constructor(private fileService: FileService) {
-  }
-
-  private _cache: Belief[] = null;
-
-  public getBelief(id: string): Belief {
-    return _.find(this._cache, {id: id});
-  }
-
-  public getBeliefs(): Belief[] {
-    if (this._cache === null) {
-      this._cache = JSON.parse(
-        this.fileService
-          .readFileSync(AppContext.getDnd3rData('belief'))
-          .toString());
-    }
-    return this._cache;
+    super(fileService, 'belief');
   }
 }

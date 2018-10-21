@@ -6,12 +6,12 @@ export interface BaseDnd3rInfoItem {
   id: string;
 }
 
-export abstract class BaseDnd3rInfo<T extends BaseDnd3rInfoItem> {
-  
+export abstract class BaseDnd3rInfoData<T extends BaseDnd3rInfoItem> {
+
   protected constructor(private service: FileService, private type: string) {
   }
 
-  private _cache: T[] = null;
+  protected _cache: T[] = null;
 
   public getInfo(id: string): T {
     return _.find(this._cache, item => item.id === id);
