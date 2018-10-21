@@ -2,6 +2,7 @@ import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
 import { FileService } from '../../../base/services/file.service';
 import { AppContext } from '../../../base/constants/app-context';
+import { BaseDnd3rInfo, BaseDnd3rInfoItem } from './base-dnd3r-info';
 
 export class Profession {
   readonly id: string;
@@ -14,8 +15,7 @@ export class Profession {
   }
 }
 
-export interface IProfessionInfo {
-  id: string;
+export interface ProfessionInfoItem extends BaseDnd3rInfoItem {
   label: string;
   keyAbility: string;
   hpDiceType: number;
@@ -25,29 +25,23 @@ export interface IProfessionInfo {
 @Injectable({
   providedIn: 'root'
 })
-export class ProfessionInfo {
-
-
-  private _cache: IProfessionInfo[] = null;
+export class ProfessionInfo extends BaseDnd3rInfo<ProfessionInfoItem> {
 
   constructor(private fileService: FileService) {
+    super(fileService, 'profession');
   }
 
-  public getProfessionInfo(id: string): IProfessionInfo {
-    return _.find(this._cache, {id: id});
-  }
-
-  public getProfessionsInfo(): IProfessionInfo[] {
-    if (this._cache === null) {
-      this._cache = JSON.parse(
-        this.fileService
-          .readFileSync(AppContext.getDnd3rData('profession'))
-          .toString());
-    }
-    return this._cache;
-  }
-
-  public setProfessionsInfo(professions: IProfessionInfo[]): void {
-    this._cache = professions;
-  }
+  // public getProfessionInfo(id: string): IProfessionInfo {
+  //   return _.find(this._cache, {id: id});
+  // }
+  //
+  // public getProfessionsInfo(): IProfessionInfo[] {
+  //   if (this._cache === null) {
+  //     this._cache = JSON.parse(
+  //       this.fileService
+  //         .readFileSync(AppContext.getDnd3rData('profession'))
+  //         .toString());
+  //   }
+  //   return this._cache;
+  // }
 }

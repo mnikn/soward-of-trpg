@@ -101,7 +101,7 @@ export class RoleEditorComponent implements OnInit {
       minWidth: 240 + 'px',
       placeholder: '请选择职业...',
       value: _.map(this.role.professions, 'id'),
-      selectOptions: this.professionInfo.getProfessionsInfo(),
+      selectOptions: this.professionInfo.getInfoList(),
       toolButton: this.professionEditOnDrawerToolButton,
       isMulti: true,
       readonly: true,

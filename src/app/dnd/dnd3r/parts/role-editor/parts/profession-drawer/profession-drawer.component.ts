@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { IProfessionInfo, Profession, ProfessionInfo } from '../../../../models/profession';
+import { ProfessionInfoItem, Profession, ProfessionInfo } from '../../../../models/profession';
 import { ToolButton } from '../../../../../../base/components/tool-button/tool-button';
 import * as _ from 'lodash';
 
@@ -17,7 +17,7 @@ export class ProfessionDrawerComponent implements OnInit {
 
   professionDrawerControls = [];
   professionDrawerForm: FormGroup;
-  professions: IProfessionInfo[];
+  professions: ProfessionInfoItem[];
   isProfessionDrawerVisible = false;
 
   addNewProfessionToolButton: ToolButton = new ToolButton('anticon anticon-plus', 'Add new profession', () => {
@@ -29,7 +29,7 @@ export class ProfessionDrawerComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.professions = this.professionInfo.getProfessionsInfo();
+    this.professions = this.professionInfo.getInfoList();
     this.professionDrawerForm = this.formBuilder.group({});
     for (let i = 0; i < this.defaultProfessions.length; ++i) {
       this.professionDrawerControls = this.professionDrawerControls.concat([{

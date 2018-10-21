@@ -1,6 +1,6 @@
 <nz-tabset>
   <div *ngFor="let profession of role.professions">
-    <nz-tab [nzTitle]="professionInfo.getProfessionInfo(profession.id).label">
+    <nz-tab [nzTitle]="professionInfo.getInfo(profession.id).label">
       <div style="margin-bottom: 16px">
         剩余技能点：
         <nz-input-number

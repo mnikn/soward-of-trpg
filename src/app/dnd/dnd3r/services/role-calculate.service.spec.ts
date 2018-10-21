@@ -13,8 +13,8 @@ describe('RoleCalculateService', () => {
   });
   it('should calculate max hp base on different hp settings type', () => {
     let professionInfo = TestBed.get(ProfessionInfo);
-    professionInfo.setProfessionsInfo([{id: 'TEST', hpDiceType: 6, skillPointIncrement: 0, label: '', keyAbility: ''}]);
-    const service: RoleCalculateService = new RoleCalculateService(professionInfo);
+    professionInfo.setInfoList([{id: 'TEST', hpDiceType: 6, skillPointIncrement: 0, label: '', keyAbility: ''}]);
+    const service: RoleCalculateService = new RoleCalculateService(professionInfo, null);
     let role = new Role();
     role.professions = [new Profession('TEST', 1)];
 
