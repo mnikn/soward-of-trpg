@@ -33,11 +33,11 @@ export class ProfessionInfo {
   constructor(private fileService: FileService) {
   }
 
-  public getProfession(id: string): IProfessionInfo {
+  public getProfessionInfo(id: string): IProfessionInfo {
     return _.find(this._cache, {id: id});
   }
 
-  public getProfessions(): IProfessionInfo[] {
+  public getProfessionsInfo(): IProfessionInfo[] {
     if (this._cache === null) {
       this._cache = JSON.parse(
         this.fileService
@@ -45,5 +45,9 @@ export class ProfessionInfo {
           .toString());
     }
     return this._cache;
+  }
+
+  public setProfessionsInfo(professions: IProfessionInfo[]): void {
+    this._cache = professions;
   }
 }

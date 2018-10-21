@@ -29,7 +29,7 @@ export class ProfessionDrawerComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.professions = this.professionInfo.getProfessions();
+    this.professions = this.professionInfo.getProfessionsInfo();
     this.professionDrawerForm = this.formBuilder.group({});
     for (let i = 0; i < this.defaultProfessions.length; ++i) {
       this.professionDrawerControls = this.professionDrawerControls.concat([{

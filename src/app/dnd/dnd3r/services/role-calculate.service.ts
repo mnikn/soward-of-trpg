@@ -16,19 +16,19 @@ export class RoleCalculateService {
     switch (role.hpSettingsType) {
       case HpSettingsType.RADNOM:
         return role.professions.reduce((result, profession) => {
-          return result + (Math.ceil(Math.random() * this.professionInfo.getProfession(profession.id).hpDiceType) +
+          return result + (Math.ceil(Math.random() * this.professionInfo.getProfessionInfo(profession.id).hpDiceType) +
             role.getCon().getModifier()) *
             profession.level;
         }, 0);
       case HpSettingsType.FULL:
         return role.professions.reduce((result, profession) => {
-          return result + (this.professionInfo.getProfession(profession.id).hpDiceType +
+          return result + (this.professionInfo.getProfessionInfo(profession.id).hpDiceType +
             role.getCon().getModifier()) *
             profession.level;
         }, 0);
       case HpSettingsType.HALF:
         return role.professions.reduce((result, profession) => {
-          return result + (this.professionInfo.getProfession(profession.id).hpDiceType / 2 +
+          return result + (this.professionInfo.getProfessionInfo(profession.id).hpDiceType / 2 +
             role.getCon().getModifier()) *
             profession.level;
         }, 0);
@@ -39,7 +39,7 @@ export class RoleCalculateService {
 
   public calculateProfessionTotalSkillPoint(profession: Profession, modifier: number) {
     return _.range(0, profession.level + 1).reduce((result, level) => {
-      let professionInfo = this.professionInfo.getProfession(profession.id);
+      let professionInfo = this.professionInfo.getProfessionInfo(profession.id);
       let incrementSkillPoint = (professionInfo.skillPointIncrement + modifier);
       if (level === 1 && profession.isMainProfession) {
         return result + incrementSkillPoint * 4;
