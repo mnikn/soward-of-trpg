@@ -24,22 +24,39 @@
 
   <div nz-col nzSpan="24" style="margin-top: 32px">
     <nz-card class='form-card' nzTitle="物品装备">
-      <h3>
-        武器：
-      </h3>
-      <nz-transfer
-        [nzDataSource]="weapons"
-        [nzTitles]="['已持有', '未持有']"
-        (nzChange)="handleTransferChanged('weapons', $event)">
-      </nz-transfer>
-      <h3>
-        盔甲：
-      </h3>
-      <nz-transfer
-        [nzDataSource]="armorTransferItems"
-        [nzTitles]="['已持有', '未持有']"
-        (nzChange)="handleTransferChanged('armors', $event)">
-      </nz-transfer>
+      <div>
+        <h3>
+          武器：
+        </h3>
+        <nz-transfer
+          [nzDataSource]="weapons"
+          [nzTitles]="['已持有', '未持有']"
+          (nzChange)="updateWeapons($event)">
+        </nz-transfer>
+      </div>
+
+      <div>
+        <h3>
+          盔甲：
+        </h3>
+        <nz-transfer
+          [nzDataSource]="armorTransferItems"
+          [nzTitles]="['已持有', '未持有']"
+          (nzChange)="updateArmors($event)">
+        </nz-transfer>
+      </div>
+
+      <div>
+        <h3>
+          物品：
+        </h3>
+        <nz-transfer
+          [nzDataSource]="goodsTransferItems"
+          [nzTitles]="['已持有', '未持有']"
+          (nzChange)="updateGoods($event)">
+        </nz-transfer>
+      </div>
+
     </nz-card>
   </div>
 

@@ -47,6 +47,7 @@ export class RoleFileService {
               .setSkills(roleData.skills.map(e => new Skill(e.id, e.professionsAssignedPoint)))
               .setWeapons(roleData.weapons)
               .setArmors(roleData.armors)
+              .setGoods(roleData.goods)
               .build();
           });
           observer.next(roles);

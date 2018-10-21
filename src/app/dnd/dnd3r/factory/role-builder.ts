@@ -4,6 +4,7 @@ import * as _ from 'lodash';
 import { Ability } from '../models/ability';
 import { Skill } from '../models/skill';
 import { Weapon } from '../models/weapon';
+import { Goods } from '../models/goods';
 
 export class RoleBuilder {
 
@@ -79,6 +80,11 @@ export class RoleBuilder {
 
   public setArmors(armors: string[]): RoleBuilder {
     this._role.armors = armors;
+    return this;
+  }
+
+  public setGoods(goods: any[]): RoleBuilder {
+    this._role.goods = goods.map(item => new Goods(item.id, item.number));
     return this;
   }
 
