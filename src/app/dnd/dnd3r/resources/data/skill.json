@@ -4,7 +4,9 @@
     "label": "估价",
     "keyAbility": "INTELLIGENCE",
     "crossClass": [],
-    "keyProfessions": []
+    "keyProfessions": [
+      "ROGUE"
+    ]
   },
   {
     "id": "ANIMAL_EMPATHY",
@@ -17,7 +19,9 @@
     "id": "HIDE",
     "label": "躲藏",
     "keyAbility": "DEXTERITY",
-    "keyProfessions": [],
+    "keyProfessions": [
+      "ROGUE"
+    ],
     "crossClass": []
   },
   {
@@ -31,70 +35,103 @@
     "id": "OPEN_LOCK",
     "label": "开锁",
     "keyAbility": "DEXTERITY",
-    "keyProfessions": [],
+    "keyProfessions": [
+      "ROGUE"
+    ],
     "crossClass": []
   },
   {
     "id": "PICK_POCKET",
-    "label": "偷窃",
+    "label": "手上功夫",
     "keyAbility": "DEXTERITY",
-    "keyProfessions": [],
+    "keyProfessions": [
+      "ROGUE"
+    ],
     "crossClass": []
   },
   {
     "id": "SEARCH",
     "label": "侦查",
     "keyAbility": "WISDOM",
-    "keyProfessions": [],
+    "keyProfessions": [
+      "ROGUE"
+    ],
     "crossClass": []
   },
   {
     "id": "LISTEN",
     "label": "聆听",
     "keyAbility": "WISDOM",
-    "keyProfessions": [],
+    "keyProfessions": [
+      "ROGUE"
+    ],
     "crossClass": []
   },
   {
     "id": "BALANCE",
     "label": "平衡",
     "keyAbility": "DEXTERITY",
-    "keyProfessions": [],
+    "keyProfessions": [
+      "ROGUE"
+    ],
     "crossClass": []
   },
   {
     "id": "DISABLE_DEVICE",
     "label": "解除装置",
     "keyAbility": "INTELLIGENCE",
-    "keyProfessions": [],
+    "keyProfessions": [
+      "ROGUE"
+    ],
     "crossClass": []
   },
   {
-    "id": "INNUENDO",
+    "id": "BLUFF",
     "label": "唬骗",
     "keyAbility": "CHARISMA",
-    "keyProfessions": [],
+    "keyProfessions": [
+      "SORCERER",
+      "ROGUE"
+    ],
     "crossClass": []
   },
   {
     "id": "TUMBLE",
     "label": "翻滚",
     "keyAbility": "DEXTERITY",
-    "keyProfessions": [],
+    "keyProfessions": [
+      "ROGUE"
+    ],
     "crossClass": []
   },
   {
     "id": "KNOWLEDGE_ARCANA",
     "label": "神秘知识",
     "keyAbility": "INTELLIGENCE",
-    "keyProfessions": ["CLERIC"],
+    "keyProfessions": [
+      "CLERIC",
+      "SORCERER"
+    ],
     "crossClass": []
   },
   {
     "id": "CONCENTRATION",
     "label": "专注",
     "keyAbility": "CONSTITUTION",
-    "keyProfessions": ["CLERIC"],
+    "keyProfessions": [
+      "CLERIC",
+      "SORCERER"
+    ],
+    "crossClass": []
+  },
+  {
+    "id": "SPELLCRAFT",
+    "label": "辨识法术",
+    "keyAbility": "INTELLIGENCE",
+    "keyProfessions": [
+      "CLERIC",
+      "SORCERER"
+    ],
     "crossClass": []
   }
 ]
