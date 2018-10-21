@@ -62,7 +62,7 @@ export class RoleBuilder {
 
   public setHp(hpSettingsType: HpSettingsType, maxHp?: number): RoleBuilder {
     this._role.hpSettingsType = hpSettingsType;
-    this._role.customMaxHp = maxHp;
+    this._role.maxHp = maxHp;
     return this;
   }
 

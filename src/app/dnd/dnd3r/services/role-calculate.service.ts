@@ -33,7 +33,7 @@ export class RoleCalculateService {
             profession.level;
         }, 0);
       case HpSettingsType.CUSTOM:
-        return role.customMaxHp;
+        return role.maxHp;
     }
   }
 
@@ -53,5 +53,9 @@ export class RoleCalculateService {
     let totalSkillPoints = this.calculateProfessionTotalSkillPoint(profession, modifier);
     let assignedPoints = _.sumBy(_.map(skills, 'professionsAssignedPoint'), profession.id);
     return totalSkillPoints - assignedPoints;
+  }
+
+  public calculateAbilityModifer(value: number): number {
+    return Math.round((value - 10) / 2);
   }
 }

@@ -16,15 +16,13 @@ export class Role {
   public age: number;
   public description: string;
   public sex: string;
-  public customMaxHp: number;
+  public maxHp: number;
   public hpSettingsType: HpSettingsType;
 
   public abilities: Ability[];
   public race: string;
   public alignment: string;
-  public shape: string;
   public belief: string;
-  public level: number;
   public professions: Profession[];
   public skills: Skill[] = [];
   public languages: string[];

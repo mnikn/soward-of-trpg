@@ -14,7 +14,7 @@ import { AbilityInfo } from '../../models/ability';
 import { FormControl } from '../../../../base/components/form/form-control';
 import { HpSettingsModalComponent } from './parts/hp-settings-modal/hp-settings-modal.component';
 import { RoleCalculateService } from '../../services/role-calculate.service';
-import { ISkillInfo, SkillInfo } from '../../models/skill';
+import { SkillInfo } from '../../models/skill';
 
 @Component({
   selector: 'app-dnd3r-role-editor',
@@ -171,7 +171,15 @@ export class RoleEditorComponent implements OnInit {
         value: this.role.getCon().value,
         colSpan: 4,
         onChange: (value: number) => {
-          this.role.getCon().value = value;
+          let maxHp = this.role.maxHp;
+          if (this.role.hpSettingsType === HpSettingsType.RADNOM) {
+            maxHp += this.calculateService.calculateAbilityModifer(value) - this.role.getCon().getModifier();
+            this.role.getCon().value = value;
+          } else {
+            this.role.getCon().value = value;
+            maxHp = this.calculateService.calculateMaxHp(this.role);
+          }
+          this.updateMaxHp(maxHp);
         }
       }, {
         id: 'wis',
@@ -207,7 +215,7 @@ export class RoleEditorComponent implements OnInit {
         id: 'maxHp',
         type: 'number',
         label: '生命值',
-        value: this.calculateService.calculateMaxHp(this.role),
+        value: this.role.maxHp,
         readonly: true,
         colSpan: 24,
         toolButton: new ToolButton('anticon anticon-setting', '生命值设置', () => {
@@ -241,13 +249,17 @@ export class RoleEditorComponent implements OnInit {
     professionControl.value = _.map(professions, 'id');
 
     let maxHp = this.calculateService.calculateMaxHp(this.role);
-    _.find(this.propertyFormControls, {id: 'maxHp'}).value = maxHp;
+    this.updateMaxHp(maxHp);
   }
 
   updateHpSettings(data: any): void {
     this.role.hpSettingsType = data.hpSettingsType;
-    this.role.customMaxHp = data.customMaxHp;
-    let maxHp = this.calculateService.calculateMaxHp(this.role);
+    let maxHp = data.hpSettingsType === HpSettingsType.CUSTOM ? data.customMaxHp : this.calculateService.calculateMaxHp(this.role);
+    this.updateMaxHp(maxHp);
+  }
+
+  private updateMaxHp(maxHp: number): void {
+    this.role.maxHp = maxHp;
     _.find(this.propertyFormControls, {id: 'maxHp'}).value = maxHp;
   }
 }

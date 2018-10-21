@@ -26,7 +26,7 @@
   </app-dnd3r-profession-drawer>
 
   <app-dnd3r-hp-settings-modal [hpSettingsType]="role.hpSettingsType"
-                               [customMaxHp]="role.hpSettingsType === HpSettingsType.CUSTOM ? role.customMaxHp : null"
+                               [customMaxHp]="role.hpSettingsType === HpSettingsType.CUSTOM ? role.maxHp : null"
                                (hpChange)="updateHpSettings($event)">
   </app-dnd3r-hp-settings-modal>
 </div>
