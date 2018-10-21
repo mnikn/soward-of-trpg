@@ -77,6 +77,11 @@ export class RoleBuilder {
     return this;
   }
 
+  public setArmors(armors: string[]): RoleBuilder {
+    this._role.armors = armors;
+    return this;
+  }
+
   public build(): Role {
     return _.cloneDeep(this._role);
   }

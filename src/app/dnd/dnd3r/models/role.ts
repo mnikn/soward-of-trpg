@@ -28,6 +28,7 @@ export class Role {
   public languages: string[] = [];
 
   public weapons: string[] = [];
+  public armors: string[] = [];
 
   public getStr(): Ability {
     return _.find(this.abilities, {id: 'STRENGTH'});

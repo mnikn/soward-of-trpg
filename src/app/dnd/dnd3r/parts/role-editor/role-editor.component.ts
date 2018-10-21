@@ -17,6 +17,7 @@ import { RoleCalculateService } from '../../services/role-calculate.service';
 import { SkillInfo } from '../../models/skill';
 import { WeaponInfo } from '../../models/weapon';
 import { TransferItem } from 'ng-zorro-antd';
+import { ArmorInfo } from '../../models/armor';
 
 @Component({
   selector: 'app-dnd3r-role-editor',
@@ -40,6 +41,7 @@ export class RoleEditorComponent implements OnInit {
   HpSettingsType: any = HpSettingsType;
 
   weapons: TransferItem[];
+  armorTransferItems: TransferItem[];
 
   constructor(private formBuilder: FormBuilder,
               private beliefInfo: BeliefInfo,
@@ -51,6 +53,7 @@ export class RoleEditorComponent implements OnInit {
               public abilityInfo: AbilityInfo,
               public skillInfo: SkillInfo,
               private weaponInfo: WeaponInfo,
+              private armorInfo: ArmorInfo,
               private calculateService: RoleCalculateService) {
   }
 
@@ -242,18 +245,21 @@ export class RoleEditorComponent implements OnInit {
       }
     });
 
-    this.weapons = this.weaponInfo.getWeaponsInfo().map(info => {
-      let item: TransferItem = {
-        key: info.id,
-        title: info.label
-      };
-      if (this.role.weapons.includes(item.key)) {
-        item.direction = 'left';
-      } else {
-        item.direction = 'right';
-      }
-      return item;
-    });
+    // this.weapons = this.weaponInfo.getWeaponsInfo().map(info => {
+    //   let item: TransferItem = {
+    //     key: info.id,
+    //     title: info.label
+    //   };
+    //   if (this.role.weapons.includes(item.key)) {
+    //     item.direction = 'left';
+    //   } else {
+    //     item.direction = 'right';
+    //   }
+    //   return item;
+    // });
+
+    this.weapons = this.createTransferItems(this.weaponInfo.getWeaponsInfo(), this.role.weapons);
+    this.armorTransferItems = this.createTransferItems(this.armorInfo.getArmorsInfo(), this.role.armors);
   }
 
   public updateProfessions(professions: Profession[]) {
@@ -276,17 +282,51 @@ export class RoleEditorComponent implements OnInit {
     this.updateMaxHp(maxHp);
   }
 
-  updateWeapons(data: any): void {
-    let changeWeapons = _.map(data.list, 'key');
-    if (data.to === 'left') {
-      this.role.weapons = _.concat(this.role.weapons, _.difference(changeWeapons, this.role.weapons));
-    } else {
-      this.role.weapons = _.filter(this.role.weapons, weaponId => !changeWeapons.includes(weaponId));
-    }
-  }
+  // updateWeapons(data: any): void {
+  //   let changeWeapons = _.map(data.list, 'key');
+  //   if (data.to === 'left') {
+  //     this.role.weapons = _.concat(this.role.weapons, _.difference(changeWeapons, this.role.weapons));
+  //   } else {
+  //     this.role.weapons = _.filter(this.role.weapons, weaponId => !changeWeapons.includes(weaponId));
+  //   }
+  // }
+  //
+  // updateArmors(data: any): void {
+  //   let changedArmors = _.map(data.list, 'key');
+  //   if (data.to === 'left') {
+  //     this.role.armors = _.concat(this.role.armors, _.difference(changedArmors, this.role.armors));
+  //   } else {
+  //     this.role.armors = _.filter(this.role.armors, id => !changedArmors.includes(id));
+  //   }
+  // }
 
   private updateMaxHp(maxHp: number): void {
     this.role.maxHp = maxHp;
     _.find(this.propertyFormControls, {id: 'maxHp'}).value = maxHp;
   }
+
+  private createTransferItems(total: any[], selected: string[]): TransferItem[] {
+    return total.map(info => {
+      let item: TransferItem = {
+        key: info.id,
+        title: info.label
+      };
+      if (selected.includes(item.key)) {
+        item.direction = 'left';
+      } else {
+        item.direction = 'right';
+      }
+      return item;
+    });
+  }
+
+  handleTransferChanged(needChangedModel: any, transferChanged: any): void {
+    let changedArmors = _.map(transferChanged.list, 'key');
+    if (transferChanged.to === 'left') {
+      this.role[needChangedModel] = _.concat(this.role[needChangedModel], _.difference(changedArmors, this.role.armors));
+    } else {
+      this.role[needChangedModel] = _.filter(this.role[needChangedModel], id => !changedArmors.includes(id));
+    }
+  }
+
 }

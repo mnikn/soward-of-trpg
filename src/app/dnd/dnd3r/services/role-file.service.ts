@@ -46,15 +46,12 @@ export class RoleFileService {
               .setSex(roleData.sex)
               .setSkills(roleData.skills.map(e => new Skill(e.id, e.professionsAssignedPoint)))
               .setWeapons(roleData.weapons)
+              .setArmors(roleData.armors)
               .build();
           });
           observer.next(roles);
           observer.complete();
         });
     });
-    // return this.baseFileService.readFile(AppContext.DND3R_ROLE_PATH)
-    //   .subscribe((data: any) => {
-    //
-    //   })
   }
 }
