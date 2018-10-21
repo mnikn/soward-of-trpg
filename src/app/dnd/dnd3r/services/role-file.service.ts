@@ -7,6 +7,7 @@ import { RoleBuilder } from '../factory/role-builder';
 import * as _ from 'lodash';
 import { AbilityInfo } from '../models/ability';
 import { Skill } from '../models/skill';
+import { Profession } from '../models/profession';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +38,7 @@ export class RoleFileService {
               .setAbilities(this.abilityInfo.createAbilities(roleData.abilities))
               .setHp(roleData.hpSettingsType, roleData.customMaxHp)
               .setBasicsInfo(roleData.name, roleData.age, roleData.description)
-              .setProfessions(roleData.professions)
+              .setProfessions(roleData.professions.map(professionData => new Profession(professionData.id, professionData.level)))
               .setRace(roleData.race)
               .setAlignment(roleData.alignment)
               .setBelief(roleData.belief)

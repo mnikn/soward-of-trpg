@@ -37,9 +37,6 @@ export class RoleEditorComponent implements OnInit {
 
   HpSettingsType: any = HpSettingsType;
 
-  skillSet: ISkillInfo[] = [];
-
-
   constructor(private formBuilder: FormBuilder,
               private beliefInfo: BeliefInfo,
               private sexInfo: SexInfo,
@@ -231,20 +228,12 @@ export class RoleEditorComponent implements OnInit {
         control.onChange = (value: any) => this.role[control.id] = value;
       }
     });
-
-    this.skillSet = this.skillInfo.getSkills();
   }
 
   public updateProfessions(professions: Profession[]) {
-    _.forEach(professions, (profession, index) => {
-      profession.remainSkillPoints = _.range(0, profession.level + 1).reduce((result, level) => {
-        let professionInfo = this.professionInfo.getProfession(profession.id);
-        let incrementSkillPoint = (professionInfo.skillPointIncrement + this.role.getInt().getModifier());
-        if (level === 1 && index === 0) {
-          return result + incrementSkillPoint * 4;
-        } else {
-          return result + incrementSkillPoint;
-        }
+    _.forEach(professions, (profession) => {
+      _.forEach(this.role.skills, (skill) => {
+        skill.professionsAssignedPoint[profession.id] = 0;
       });
     });
     this.role.professions = professions;
@@ -260,13 +249,5 @@ export class RoleEditorComponent implements OnInit {
     this.role.customMaxHp = data.customMaxHp;
     let maxHp = this.calculateService.calculateMaxHp(this.role);
     _.find(this.propertyFormControls, {id: 'maxHp'}).value = maxHp;
-  }
-
-  public updateProfessionSkillPoint(profession: Profession, isIncrement: boolean, step = 1) {
-    if (isIncrement) {
-      profession.remainSkillPoints -= step;
-    } else {
-      profession.remainSkillPoints += step;
-    }
   }
 }

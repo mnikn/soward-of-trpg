@@ -3,8 +3,9 @@
     <nz-tab [nzTitle]="professionInfo.getProfession(profession.id).label">
       <div style="margin-bottom: 16px">
         剩余技能点：
-        <nz-input-number [(ngModel)]="profession.remainSkillPoints"
-                         ngDefaultControl="true" [nzDisabled]="true">
+        <nz-input-number
+          [ngModel]="calculateService.calculateProfessionRemainSkillPoint(profession,role.getInt().getModifier(), role.skills)"
+          ngDefaultControl="true" [nzDisabled]="true">
         </nz-input-number>
       </div>
       <nz-table #basicTable [nzData]="role.skills">
@@ -28,8 +29,7 @@
           <td>
             <nz-input-number [nzMin]="0"
                              ngDefaultControl="true"
-                             [(ngModel)]="data.professionsAssignedPoint[profession.id]"
-                             (ngModelChange)="onSkillPointAssigned.emit({profession: profession, isIncrement: true})">
+                             [(ngModel)]="data.professionsAssignedPoint[profession.id]">å
             </nz-input-number>
           </td>
         </tr>

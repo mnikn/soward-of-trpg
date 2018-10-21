@@ -35,6 +35,9 @@ export class SkillInfo {
   }
 
   public getSkill(id: string): ISkillInfo {
+    if (this._cache === null) {
+      this._cache = this.getSkills();
+    }
     return _.find(this._cache, {id: id});
   }
 

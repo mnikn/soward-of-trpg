@@ -6,12 +6,11 @@ import { AppContext } from '../../../base/constants/app-context';
 export class Profession {
   readonly id: string;
   public level: number;
-  public remainSkillPoints: number;
+  public isMainProfession: boolean;
 
-  constructor(id?: string, level?: number, remainSkillPoints?: number) {
+  constructor(id?: string, level?: number) {
     this.id = id;
     this.level = level;
-    this.remainSkillPoints = remainSkillPoints;
   }
 }
 

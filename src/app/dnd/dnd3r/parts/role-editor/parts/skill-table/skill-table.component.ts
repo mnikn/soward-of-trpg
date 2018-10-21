@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit} from '@angular/core';
 import { Role } from '../../../../models/role';
-import { Profession, ProfessionInfo } from '../../../../models/profession';
+import { ProfessionInfo } from '../../../../models/profession';
 import { SkillInfo } from '../../../../models/skill';
 import { AbilityInfo } from '../../../../models/ability';
+import { RoleCalculateService } from '../../../../services/role-calculate.service';
 
 @Component({
   selector: 'app-dnd3r-skill-table',
@@ -12,11 +13,11 @@ import { AbilityInfo } from '../../../../models/ability';
 export class SkillTableComponent implements OnInit {
 
   @Input() role: Role;
-  @Output() onSkillPointAssigned: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(public professionInfo: ProfessionInfo,
               public skillInfo: SkillInfo,
-              public abilityInfo: AbilityInfo) { }
+              public abilityInfo: AbilityInfo,
+              public calculateService: RoleCalculateService) { }
 
   ngOnInit() {
   }
