@@ -25,9 +25,9 @@ export class Role {
   public belief: string;
   public professions: Profession[];
   public skills: Skill[] = [];
-  public languages: string[];
+  public languages: string[] = [];
 
-  public weapons: string[];
+  public weapons: string[] = [];
 
   public getStr(): Ability {
     return _.find(this.abilities, {id: 'STRENGTH'});

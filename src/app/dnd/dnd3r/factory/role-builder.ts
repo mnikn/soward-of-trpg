@@ -3,6 +3,7 @@ import { Profession } from '../models/profession';
 import * as _ from 'lodash';
 import { Ability } from '../models/ability';
 import { Skill } from '../models/skill';
+import { Weapon } from '../models/weapon';
 
 export class RoleBuilder {
 
@@ -68,6 +69,11 @@ export class RoleBuilder {
 
   public setSkills(skills: Skill[]): RoleBuilder {
     this._role.skills = skills;
+    return this;
+  }
+
+  public setWeapons(weapons: string[]): RoleBuilder {
+    this._role.weapons = weapons;
     return this;
   }
 

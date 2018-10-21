@@ -21,6 +21,22 @@
       </app-dnd3r-skill-table>
     </nz-card>
   </div>
+
+  <div nz-col nzSpan="24" style="margin-top: 32px">
+    <nz-card class='form-card' nzTitle="物品装备">
+
+      <h3>
+        武器：
+      </h3>
+      <nz-transfer
+        [nzDataSource]="weapons"
+        [nzTitles]="['已持有', '未持有']"
+        (nzChange)="updateWeapons($event)">
+      </nz-transfer>
+    </nz-card>
+  </div>
+
+
   <app-dnd3r-profession-drawer [defaultProfessions]="role.professions"
                                (professionsChange)="updateProfessions($event)">
   </app-dnd3r-profession-drawer>

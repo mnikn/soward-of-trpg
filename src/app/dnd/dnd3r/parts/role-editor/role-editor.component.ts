@@ -15,6 +15,8 @@ import { FormControl } from '../../../../base/components/form/form-control';
 import { HpSettingsModalComponent } from './parts/hp-settings-modal/hp-settings-modal.component';
 import { RoleCalculateService } from '../../services/role-calculate.service';
 import { SkillInfo } from '../../models/skill';
+import { WeaponInfo } from '../../models/weapon';
+import { TransferItem } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-dnd3r-role-editor',
@@ -37,6 +39,8 @@ export class RoleEditorComponent implements OnInit {
 
   HpSettingsType: any = HpSettingsType;
 
+  weapons: TransferItem[];
+
   constructor(private formBuilder: FormBuilder,
               private beliefInfo: BeliefInfo,
               private sexInfo: SexInfo,
@@ -46,6 +50,7 @@ export class RoleEditorComponent implements OnInit {
               private alignmentInfo: AlignmentInfo,
               public abilityInfo: AbilityInfo,
               public skillInfo: SkillInfo,
+              private weaponInfo: WeaponInfo,
               private calculateService: RoleCalculateService) {
   }
 
@@ -236,6 +241,19 @@ export class RoleEditorComponent implements OnInit {
         control.onChange = (value: any) => this.role[control.id] = value;
       }
     });
+
+    this.weapons = this.weaponInfo.getWeaponsInfo().map(info => {
+      let item: TransferItem = {
+        key: info.id,
+        title: info.label
+      };
+      if (this.role.weapons.includes(item.key)) {
+        item.direction = 'left';
+      } else {
+        item.direction = 'right';
+      }
+      return item;
+    });
   }
 
   public updateProfessions(professions: Profession[]) {
@@ -256,6 +274,15 @@ export class RoleEditorComponent implements OnInit {
     this.role.hpSettingsType = data.hpSettingsType;
     let maxHp = data.hpSettingsType === HpSettingsType.CUSTOM ? data.customMaxHp : this.calculateService.calculateMaxHp(this.role);
     this.updateMaxHp(maxHp);
+  }
+
+  updateWeapons(data: any): void {
+    let changeWeapons = _.map(data.list, 'key');
+    if (data.to === 'left') {
+      this.role.weapons = _.concat(this.role.weapons, _.difference(changeWeapons, this.role.weapons));
+    } else {
+      this.role.weapons = _.filter(this.role.weapons, weaponId => !changeWeapons.includes(weaponId));
+    }
   }
 
   private updateMaxHp(maxHp: number): void {
