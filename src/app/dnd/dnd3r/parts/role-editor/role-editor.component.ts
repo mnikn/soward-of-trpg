@@ -317,4 +317,9 @@ export class RoleEditorComponent implements OnInit {
     });
   }
 
+  public getMagicProfessions(): Profession[] {
+    let professionInfo = this.professionInfo;
+    return _.filter(this.role.professions, p => !!professionInfo.getInfo(p.id).magicType);
+  }
+
 }

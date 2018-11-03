@@ -48,6 +48,7 @@ export class RoleFileService {
               .setWeapons(roleData.weapons)
               .setArmors(roleData.armors)
               .setGoods(roleData.goods)
+              .setMagics(roleData.magics)
               .build();
           });
           observer.next(roles);

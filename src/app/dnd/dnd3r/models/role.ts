@@ -1,8 +1,9 @@
 import { Ability } from './ability';
 import * as _ from 'lodash';
-import { Profession } from './profession';
+import { Profession, ProfessionInfo, ProfessionInfoItem } from './profession';
 import { Skill } from './skill';
 import { Goods } from './goods';
+import { Magic } from './magic';
 
 export enum HpSettingsType {
   RADNOM,
@@ -31,6 +32,8 @@ export class Role {
   public weapons: string[] = [];
   public armors: string[] = [];
   public goods: Goods[] = [];
+
+  public magics: string[] = [];
 
   public getStr(): Ability {
     return _.find(this.abilities, {id: 'STRENGTH'});

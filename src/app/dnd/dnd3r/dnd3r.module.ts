@@ -14,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfessionDrawerComponent } from './parts/role-editor/parts/profession-drawer/profession-drawer.component';
 import { HpSettingsModalComponent } from './parts/role-editor/parts/hp-settings-modal/hp-settings-modal.component';
 import { SkillTableComponent } from './parts/role-editor/parts/skill-table/skill-table.component';
+import { MagicTransferComponent } from './parts/role-editor/parts/magic-transfer/magic-transfer.component';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import { SkillTableComponent } from './parts/role-editor/parts/skill-table/skill
     RoleEditorToolbarComponent,
     ProfessionDrawerComponent,
     HpSettingsModalComponent,
-    SkillTableComponent],
+    SkillTableComponent,
+    MagicTransferComponent],
   exports: [RoleCardComponent]
 })
 export class Dnd3rModule {
