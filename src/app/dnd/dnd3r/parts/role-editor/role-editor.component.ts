@@ -6,7 +6,7 @@ import { SexInfo } from '../../models/sex';
 import { BeliefInfo } from '../../models/belief';
 import { RaceInfo } from '../../models/race';
 import { LanguageInfo } from '../../models/language';
-import { Profession, ProfessionInfo } from '../../models/profession';
+import { Profession, ProfessionInfo, ProfessionInfoItem } from '../../models/profession';
 import { ToolButton } from '../../../../base/components/tool-button/tool-button';
 import { ProfessionDrawerComponent } from './parts/profession-drawer/profession-drawer.component';
 import * as _ from 'lodash';
@@ -44,6 +44,8 @@ export class RoleEditorComponent implements OnInit {
   weapons: TransferItem[];
   armorTransferItems: TransferItem[];
   goodsTransferItems: TransferItem[];
+
+  magicProfessions: ProfessionInfoItem[] = [];
 
   constructor(private formBuilder: FormBuilder,
               private beliefInfo: BeliefInfo,
@@ -252,6 +254,8 @@ export class RoleEditorComponent implements OnInit {
     this.weapons = this.createTransferItems(this.weaponInfo.getWeaponsInfo(), this.role.weapons);
     this.armorTransferItems = this.createTransferItems(this.armorInfo.getArmorsInfo(), this.role.armors);
     this.goodsTransferItems = this.createTransferItems(this.goodsInfo.getGoodsListInfo(), _.map(this.role.goods, 'id'));
+
+    this.magicProfessions = this.getMagicProfessions();
   }
 
   public updateProfessions(professions: Profession[]) {
@@ -266,6 +270,8 @@ export class RoleEditorComponent implements OnInit {
 
     let maxHp = this.calculateService.calculateMaxHp(this.role);
     this.updateMaxHp(maxHp);
+
+    this.magicProfessions = this.getMagicProfessions();
   }
 
   updateHpSettings(data: any): void {
@@ -317,9 +323,11 @@ export class RoleEditorComponent implements OnInit {
     });
   }
 
-  public getMagicProfessions(): Profession[] {
+  private getMagicProfessions(): ProfessionInfoItem[] {
     let professionInfo = this.professionInfo;
-    return _.filter(this.role.professions, p => !!professionInfo.getInfo(p.id).magicType);
+    let professions = _.filter(this.role.professions, p => !!professionInfo.getInfo(p.id).magicType);
+    let magicProfessions = _.map(professions, p => professionInfo.getInfo(p.id));
+    return magicProfessions;
   }
 
 }

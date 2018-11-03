@@ -1,0 +1,22 @@
+<div style="margin-top: 32px">
+  <nz-card class='form-card' nzTitle="法术">
+    <nz-tabset>
+      <div *ngFor="let profession of magicProfessions">
+        <nz-tab [nzTitle]="profession.label">
+          <nz-tabset>
+            <div *ngFor="let magicLevel of magicLevels">
+              <nz-tab [nzTitle]="magicLevel + '环法术'">
+                <nz-transfer
+                  [nzListStyle]="{width: 45 + '%'}"
+                  [nzDataSource]="getMagicTransferItems(magicLevel, profession.magicType)"
+                  [nzTitles]="['已持有', '未持有']"
+                  (nzChange)="updateMagics($event)">
+                </nz-transfer>
+              </nz-tab>
+            </div>
+          </nz-tabset>
+        </nz-tab>
+      </div>
+    </nz-tabset>
+  </nz-card>
+</div>

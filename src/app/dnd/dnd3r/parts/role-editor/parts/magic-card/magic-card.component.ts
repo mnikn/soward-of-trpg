@@ -3,16 +3,17 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MagicInfo } from '../../../../models/magic';
 import { TransferItem } from 'ng-zorro-antd';
 import { Role } from '../../../../models/role';
-import { Profession, ProfessionInfo, ProfessionInfoItem } from '../../../../models/profession';
+import { ProfessionInfo, ProfessionInfoItem } from '../../../../models/profession';
 
 @Component({
-  selector: 'app-dnd3r-magic-transfer',
-  templateUrl: './magic-transfer.component.html',
-  styleUrls: ['./magic-transfer.component.css']
+  selector: 'app-dnd3r-magic-card',
+  templateUrl: './magic-card.component.html',
+  styleUrls: ['./magic-card.component.css']
 })
-export class MagicTransferComponent implements OnInit {
+export class MagicCardComponent implements OnInit {
 
   @Input() role: Role;
+  @Input() magicProfessions: ProfessionInfoItem[];
   magicLevels: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   totalMagicTransferItems: Map<string, TransferItem[]> = new Map<string, TransferItem[]>();
 
@@ -69,13 +70,6 @@ export class MagicTransferComponent implements OnInit {
     let professionMagicTypes = _.map(this.role.professions, p => professionInfo.getInfo(p.id).magicType);
     let magicTypes = _.filter(_.uniq(professionMagicTypes), e => !!e);
     return magicTypes;
-  }
-
-  public getMagicProfessions(): ProfessionInfoItem[] {
-    let professionInfo = this.professionInfo;
-    let professions = _.filter(this.role.professions, p => !!professionInfo.getInfo(p.id).magicType);
-    let magicProfessions = _.map(professions, p => professionInfo.getInfo(p.id));
-    return magicProfessions;
   }
 
 }
