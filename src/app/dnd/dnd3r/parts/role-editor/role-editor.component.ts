@@ -41,10 +41,6 @@ export class RoleEditorComponent implements OnInit {
 
   HpSettingsType: any = HpSettingsType;
 
-  weapons: TransferItem[];
-  armorTransferItems: TransferItem[];
-  goodsTransferItems: TransferItem[];
-
   magicProfessions: Profession[] = [];
 
   constructor(private formBuilder: FormBuilder,
@@ -56,9 +52,6 @@ export class RoleEditorComponent implements OnInit {
               private alignmentInfo: AlignmentInfo,
               public abilityInfo: AbilityInfo,
               public skillInfo: SkillInfo,
-              private weaponInfo: WeaponInfo,
-              private armorInfo: ArmorInfo,
-              private goodsInfo: GoodsInfo,
               private calculateService: RoleCalculateService) {
   }
 
@@ -250,11 +243,6 @@ export class RoleEditorComponent implements OnInit {
       }
     });
 
-
-    this.weapons = this.createTransferItems(this.weaponInfo.getWeaponsInfo(), this.role.weapons);
-    this.armorTransferItems = this.createTransferItems(this.armorInfo.getArmorsInfo(), this.role.armors);
-    this.goodsTransferItems = this.createTransferItems(this.goodsInfo.getGoodsListInfo(), _.map(this.role.goods, 'id'));
-
     this.magicProfessions = this.getMagicProfessions();
   }
 
@@ -280,47 +268,9 @@ export class RoleEditorComponent implements OnInit {
     this.updateMaxHp(maxHp);
   }
 
-  updateWeapons(transferChanged: any): void {
-    this.role.weapons = this.handleTransferChanged(this.role.weapons, transferChanged);
-  }
-
-  updateArmors(transferChanged: any): void {
-    this.role.armors = this.handleTransferChanged(this.role.armors, transferChanged);
-  }
-
-  updateGoods(transferChanged: any): void {
-    this.role.goods = this.handleTransferChanged(_.map(this.role.goods, 'id'), transferChanged).map(itemId => {
-      return new Goods(itemId);
-    });
-  }
-
-  private handleTransferChanged(originSelectedItems: any, transferChanged: any): string[] {
-    let changedItems = _.map(transferChanged.list, 'key');
-    if (transferChanged.to === 'left') {
-      return _.concat(originSelectedItems, _.difference(changedItems, originSelectedItems));
-    } else {
-      return _.filter(originSelectedItems, id => !changedItems.includes(id));
-    }
-  }
-
   private updateMaxHp(maxHp: number): void {
     this.role.maxHp = maxHp;
     _.find(this.propertyFormControls, {id: 'maxHp'}).value = maxHp;
-  }
-
-  private createTransferItems(total: any[], selected: string[]): TransferItem[] {
-    return total.map(info => {
-      let item: TransferItem = {
-        key: info.id,
-        title: info.label
-      };
-      if (selected.includes(item.key)) {
-        item.direction = 'left';
-      } else {
-        item.direction = 'right';
-      }
-      return item;
-    });
   }
 
   private getMagicProfessions(): Profession[] {

@@ -15,6 +15,7 @@ import { ProfessionDrawerComponent } from './parts/role-editor/parts/profession-
 import { HpSettingsModalComponent } from './parts/role-editor/parts/hp-settings-modal/hp-settings-modal.component';
 import { SkillTableComponent } from './parts/role-editor/parts/skill-table/skill-table.component';
 import { MagicCardComponent } from './parts/role-editor/parts/magic-card/magic-card.component';
+import { ItemCardComponent } from './parts/role-editor/parts/item-card/item-card.component';
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import { MagicCardComponent } from './parts/role-editor/parts/magic-card/magic-c
     ProfessionDrawerComponent,
     HpSettingsModalComponent,
     SkillTableComponent,
-    MagicCardComponent],
+    MagicCardComponent,
+    ItemCardComponent],
   exports: [RoleCardComponent]
 })
 export class Dnd3rModule {
