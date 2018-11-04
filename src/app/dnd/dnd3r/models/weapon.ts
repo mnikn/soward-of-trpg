@@ -6,9 +6,10 @@ import { Injectable } from '@angular/core';
 export interface Weapon {
   id: string;
   label: string;
+  description: string;
   damageDiceNumber: number;
   damageDiceType: number;
-  damageType: number;
+  damageType: string;
 }
 
 

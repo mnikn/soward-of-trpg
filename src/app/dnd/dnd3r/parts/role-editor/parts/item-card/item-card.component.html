@@ -5,6 +5,8 @@
     </h3>
     <nz-transfer
       [nzDataSource]="weapons"
+      [nzListStyle]="{width: 45 + '%'}"
+      [nzRender]="listItem"
       [nzTitles]="['已持有', '未持有']"
       (nzChange)="updateWeapons($event)">
     </nz-transfer>
@@ -16,6 +18,8 @@
     </h3>
     <nz-transfer
       [nzDataSource]="armorTransferItems"
+      [nzListStyle]="{width: 45 + '%'}"
+      [nzRender]="listItem"
       [nzTitles]="['已持有', '未持有']"
       (nzChange)="updateArmors($event)">
     </nz-transfer>
@@ -27,9 +31,17 @@
     </h3>
     <nz-transfer
       [nzDataSource]="goodsTransferItems"
+      [nzListStyle]="{width: 45 + '%'}"
+      [nzRender]="listItem"
       [nzTitles]="['已持有', '未持有']"
       (nzChange)="updateGoods($event)">
     </nz-transfer>
   </div>
+
+  <ng-template #listItem let-item>
+    <span [nzTitle]="item.description" nz-tooltip>
+      {{ item.title }}
+    </span>
+  </ng-template>
 
 </nz-card>

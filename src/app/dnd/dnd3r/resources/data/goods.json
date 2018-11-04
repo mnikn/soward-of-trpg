@@ -1,6 +1,7 @@
 [
   {
-    "id": "BELL",
-    "label": "钟"
+    "id": "BACKPACK",
+    "label": "背包",
+    "description": "可背负的皮制背袋，通常附有固定用皮带"
   }
 ]

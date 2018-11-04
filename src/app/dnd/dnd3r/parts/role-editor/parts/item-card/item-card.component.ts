@@ -50,7 +50,8 @@ export class ItemCardComponent implements OnInit {
     return total.map(info => {
       let item: TransferItem = {
         key: info.id,
-        title: info.label
+        title: info.label,
+        description: info.description
       };
       if (selected.includes(item.key)) {
         item.direction = 'left';

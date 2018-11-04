@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export interface Armor {
   id: string;
   label: string;
+  description: string;
 }
 
 

@@ -16,6 +16,7 @@ export class Goods {
 export interface IGoodsInfo {
   id: string;
   label: string;
+  description: string;
 }
 
 
