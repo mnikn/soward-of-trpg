@@ -52,6 +52,7 @@ export class MagicCardComponent implements OnInit {
       let item: TransferItem = {
         key: info.id,
         title: info.label,
+        description: info.description,
         level: info.level,
         profession: profession.id
       };

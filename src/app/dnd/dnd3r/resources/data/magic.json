@@ -3,79 +3,92 @@
     "id": "CREATE_WATER",
     "magicType": "DIVINE",
     "level": 0,
-    "label": "造水术"
+    "label": "造水术",
+    "description": "每等级可造出2加仑纯水"
   },
   {
     "id": "ALARM",
     "magicType": "ARCANE",
-    "level": 0,
-    "label": "魔法警报"
+    "level": 1,
+    "label": "魔法警报",
+    "description": "产生警报结界，持续时间为每等级2小时"
   },
   {
     "id": "DETECT_MAGIC",
     "magicType": "ARCANE",
     "level": 0,
-    "label": "侦测魔法"
+    "label": "侦测魔法",
+    "description": "侦测60尺内的法术或魔法物品"
   },
   {
     "id": "ARCANE_MARK",
     "magicType": "ARCANE",
     "level": 0,
-    "label": "秘法印记"
+    "label": "秘法印记",
+    "description": "刻上可见或不可见的个人记号"
   },
   {
     "id": "READ_MAGIC",
     "magicType": "ARCANE",
     "level": 0,
-    "label": "阅读魔法"
+    "label": "阅读魔法",
+    "description": "阅读卷轴及法术书"
   },
   {
     "id": "PRESTIDIGITATION",
     "magicType": "ARCANE",
     "level": 0,
-    "label": "魔法伎俩"
+    "label": "魔法伎俩",
+    "description": "玩一些小把戏"
   },
   {
     "id": "GHOST_SOUND",
     "magicType": "ARCANE",
     "level": 0,
-    "label": "幻音术"
+    "label": "幻音术",
+    "description": "发出虚幻的假声"
   },
   {
     "id": "MESSAGE",
     "magicType": "ARCANE",
     "level": 0,
-    "label": "传讯术"
+    "label": "传讯术",
+    "description": "可在远距离使用轻声交谈"
   },
   {
     "id": "MAGE_HAND",
     "magicType": "ARCANE",
     "level": 0,
-    "label": "法师帮手"
+    "label": "法师帮手",
+    "description": "可对5磅以内的物品使用心灵遥控"
   },
   {
     "id": "SLEEP",
     "magicType": "ARCANE",
     "level": 1,
-    "label": "睡眠术"
+    "label": "睡眠术",
+    "description": "使生命骰数和为4的生物群陷入魔法昏睡状态"
   },
   {
     "id": "MAGIC_MISSILE",
     "magicType": "ARCANE",
     "level": 1,
-    "label": "魔法飞弹"
+    "label": "魔法飞弹",
+    "description": "造成1d4+1点伤害，1级时可发射一颗，之后每2等级加一颗，最高五颗"
   },
   {
     "id": "DISGUISE_SELF",
     "magicType": "ARCANE",
     "level": 1,
-    "label": "魔法易容"
+    "label": "魔法易容",
+    "description": "改变自己的外貌"
   },
   {
     "id": "IDENTIFY",
     "magicType": "ARCANE",
     "level": 1,
-    "label": "鉴定术"
+    "label": "鉴定术",
+    "description": "鉴识魔法物品的其中一项特性"
   }
 
 ]

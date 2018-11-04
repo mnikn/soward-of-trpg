@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { ToolButtonComponent } from './tool-button/tool-button.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormComponent } from './form/form.component';
+import { TransferComponent } from './transfer/transfer.component';
 
 @NgModule({
   imports: [
@@ -13,8 +14,8 @@ import { FormComponent } from './form/form.component';
     FormsModule,
     ReactiveFormsModule,
   ],
-  declarations: [ToolButtonComponent, ToolButtonGroupComponent, FormComponent],
-  exports: [ToolButtonComponent, ToolButtonGroupComponent, FormComponent]
+  declarations: [ToolButtonComponent, ToolButtonGroupComponent, FormComponent, TransferComponent],
+  exports: [ToolButtonComponent, ToolButtonGroupComponent, FormComponent, TransferComponent]
 })
 export class BaseComponentsModule {
 }

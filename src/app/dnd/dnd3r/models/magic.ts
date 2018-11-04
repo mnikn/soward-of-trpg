@@ -12,6 +12,7 @@ export interface MagicInfoItem extends BaseDnd3rInfoItem {
   label: string;
   level: number;
   magicType: string;
+  description: string;
 }
 
 @Injectable({
