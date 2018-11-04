@@ -10,5 +10,72 @@
     "magicType": "ARCANE",
     "level": 0,
     "label": "魔法警报"
+  },
+  {
+    "id": "DETECT_MAGIC",
+    "magicType": "ARCANE",
+    "level": 0,
+    "label": "侦测魔法"
+  },
+  {
+    "id": "ARCANE_MARK",
+    "magicType": "ARCANE",
+    "level": 0,
+    "label": "秘法印记"
+  },
+  {
+    "id": "READ_MAGIC",
+    "magicType": "ARCANE",
+    "level": 0,
+    "label": "阅读魔法"
+  },
+  {
+    "id": "PRESTIDIGITATION",
+    "magicType": "ARCANE",
+    "level": 0,
+    "label": "魔法伎俩"
+  },
+  {
+    "id": "GHOST_SOUND",
+    "magicType": "ARCANE",
+    "level": 0,
+    "label": "幻音术"
+  },
+  {
+    "id": "MESSAGE",
+    "magicType": "ARCANE",
+    "level": 0,
+    "label": "传讯术"
+  },
+  {
+    "id": "MAGE_HAND",
+    "magicType": "ARCANE",
+    "level": 0,
+    "label": "法师帮手"
+  },
+  {
+    "id": "SLEEP",
+    "magicType": "ARCANE",
+    "level": 1,
+    "label": "睡眠术"
+  },
+  {
+    "id": "MAGIC_MISSILE",
+    "magicType": "ARCANE",
+    "level": 1,
+    "label": "魔法飞弹"
+  },
+  {
+    "id": "DISGUISE_SELF",
+    "magicType": "ARCANE",
+    "level": 1,
+    "label": "魔法易容"
+  },
+  {
+    "id": "IDENTIFY",
+    "magicType": "ARCANE",
+    "level": 1,
+    "label": "鉴定术"
   }
+
 ]

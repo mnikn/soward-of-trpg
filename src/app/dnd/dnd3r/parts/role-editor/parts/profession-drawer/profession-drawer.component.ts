@@ -75,6 +75,9 @@ export class ProfessionDrawerComponent implements OnInit {
 
   submit(): void {
     let currentProfessions = _.map(this.professionDrawerControls, data => new Profession(data.professionId, data.level));
+    if (currentProfessions.length > 0) {
+      currentProfessions[0].isMainProfession = true;
+    }
     this.professionsChange.emit(currentProfessions);
     this.closeProfessionDrawer();
   }

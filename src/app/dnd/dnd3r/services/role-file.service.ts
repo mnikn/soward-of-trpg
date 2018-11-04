@@ -38,7 +38,7 @@ export class RoleFileService {
               .setAbilities(this.abilityInfo.createAbilities(roleData.abilities))
               .setHp(roleData.hpSettingsType, roleData.maxHp)
               .setBasicsInfo(roleData.name, roleData.age, roleData.description)
-              .setProfessions(roleData.professions.map(professionData => new Profession(professionData.id, professionData.level)))
+              .setProfessions(roleData.professions)
               .setRace(roleData.race)
               .setAlignment(roleData.alignment)
               .setBelief(roleData.belief)

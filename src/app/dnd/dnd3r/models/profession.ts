@@ -8,9 +8,10 @@ export class Profession {
   public level: number;
   public isMainProfession: boolean;
 
-  constructor(id?: string, level?: number) {
+  constructor(id?: string, level?: number, isMainProfession?: boolean) {
     this.id = id;
     this.level = level;
+    this.isMainProfession = isMainProfession;
   }
 }
 

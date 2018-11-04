@@ -32,8 +32,9 @@ export class RoleBuilder {
     return this;
   }
 
-  public setProfessions(professions: Profession[]): RoleBuilder {
-    this._role.professions = professions;
+  public setProfessions(professions: any[]): RoleBuilder {
+    this._role.professions = professions.map(professionData =>
+      new Profession(professionData.id, professionData.level, professionData.isMainProfession));
     return this;
   }
 
