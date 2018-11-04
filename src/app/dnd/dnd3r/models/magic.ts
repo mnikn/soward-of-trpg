@@ -3,7 +3,12 @@ import { Injectable } from '@angular/core';
 import { FileService } from '../../../base/services/file.service';
 import { BaseDnd3rInfoData, BaseDnd3rInfoItem } from './base-dnd3r-info-data';
 
-export interface Magic extends BaseDnd3rInfoItem {
+export class Magic {
+  id: string;
+  profession: string;
+}
+
+export interface MagicInfoItem extends BaseDnd3rInfoItem {
   label: string;
   level: number;
   magicType: string;
@@ -12,7 +17,7 @@ export interface Magic extends BaseDnd3rInfoItem {
 @Injectable({
   providedIn: 'root'
 })
-export class MagicInfo extends BaseDnd3rInfoData<Magic> {
+export class MagicInfo extends BaseDnd3rInfoData<MagicInfoItem> {
 
   constructor(private fileService: FileService) {
     super(fileService, 'magic');

@@ -4,6 +4,7 @@ import * as _ from 'lodash';
 import { Ability } from '../models/ability';
 import { Skill } from '../models/skill';
 import { Goods } from '../models/goods';
+import { Magic } from '../models/magic';
 
 export class RoleBuilder {
 
@@ -87,8 +88,13 @@ export class RoleBuilder {
     return this;
   }
 
-  public setMagics(magics: string[]): RoleBuilder {
-    this._role.magics = magics;
+  public setMagics(magics: any[]): RoleBuilder {
+    this._role.magics = _.map(magics, data => {
+      let magic = new Magic();
+      magic.id = data.id;
+      magic.profession = data.profession;
+      return magic;
+    });
     return this;
   }
 

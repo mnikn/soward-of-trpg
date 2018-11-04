@@ -1,9 +1,9 @@
 import * as _ from 'lodash';
 import { Component, Input, OnInit } from '@angular/core';
-import { MagicInfo } from '../../../../models/magic';
+import { Magic, MagicInfo } from '../../../../models/magic';
 import { TransferItem } from 'ng-zorro-antd';
 import { Role } from '../../../../models/role';
-import { ProfessionInfo, ProfessionInfoItem } from '../../../../models/profession';
+import { Profession, ProfessionInfo } from '../../../../models/profession';
 
 @Component({
   selector: 'app-dnd3r-magic-card',
@@ -12,33 +12,48 @@ import { ProfessionInfo, ProfessionInfoItem } from '../../../../models/professio
 })
 export class MagicCardComponent implements OnInit {
 
-  @Input() role: Role;
-  @Input() magicProfessions: ProfessionInfoItem[];
-  magicLevels: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+  private _magicProfessions: Profession[];
+  totalRemainMagicNumbers: Map<string, number> = new Map<string, number>();
   totalMagicTransferItems: Map<string, TransferItem[]> = new Map<string, TransferItem[]>();
 
+  @Input() role: Role;
+
+  @Input() set magicProfessions(value: Profession[]) {
+    this._magicProfessions = value;
+    _.forEach(value, profession => {
+      _.forEach(_.range(profession.level), level => {
+        let magicTransferItems = this.createMagicTransferItems(level, profession);
+        this.totalMagicTransferItems.set(level + profession.id, magicTransferItems);
+      });
+    });
+
+    this.updateTotalRemainMagicNumbers();
+  }
+
+  get magicProfessions(): Profession[] {
+    return this._magicProfessions;
+  }
+
   constructor(public magicInfo: MagicInfo,
-              private professionInfo: ProfessionInfo) {
+              public professionInfo: ProfessionInfo) {
   }
 
   ngOnInit() {
-    _.forEach(this.magicLevels, level => {
-      _.forEach(this.getSelectableMagicTypes(), magicType => {
-        let magicTransferItems = this.createMagicTransferItems(level, magicType);
-        this.totalMagicTransferItems.set(level + magicType, magicTransferItems);
-      });
-    });
   }
 
-  public createMagicTransferItems(level: number, magicType: string): TransferItem[] {
-    let magicInfoTransferItems = this.magicInfo.getMagics(level, magicType);
-    let selectedMagics = _.filter(this.role.magics, magic => this.magicInfo.getInfo(magic).level === level);
+  public createMagicTransferItems(level: number, profession: Profession): TransferItem[] {
+    let professionInfo = this.professionInfo.getInfo(profession.id);
+    let magicInfoTransferItems = this.magicInfo.getMagics(level, professionInfo.magicType);
+    let selectedMagics = _.filter(this.role.magics, magic =>
+      this.magicInfo.getInfo(magic.id).level === level &&
+      magic.profession === profession.id);
     return magicInfoTransferItems.map(info => {
       let item: TransferItem = {
         key: info.id,
         title: info.label
       };
-      if (selectedMagics.includes(item.key)) {
+      if (selectedMagics.map(e => e.id).includes(item.key)) {
         item.direction = 'left';
       } else {
         item.direction = 'right';
@@ -47,29 +62,60 @@ export class MagicCardComponent implements OnInit {
     });
   }
 
-  public getMagicTransferItems(level: number, magicType: string): TransferItem[] {
-    let items = this.totalMagicTransferItems.get(level + magicType);
+  private updateTotalRemainMagicNumbers(): void {
+    _.forEach(this.magicProfessions, profession => {
+      let professionInfo = this.professionInfo.getInfo(profession.id);
+      let maxMagicLevel = Math.min(profession.level, professionInfo.magicNumbers.length);
+      console.log(maxMagicLevel);
+      _.forEach(_.range(0, maxMagicLevel + 1), magicLevel => {
+        let totalMagicNumber = professionInfo.magicNumbers[profession.level - 1][magicLevel];
+        let selectedMagicNumber = this.role.magics.filter(item =>
+          item.profession === profession.id && this.magicInfo.getInfo(item.id).level === magicLevel)
+          .length;
+        this.totalRemainMagicNumbers.set(magicLevel + profession.id, totalMagicNumber - selectedMagicNumber);
+      });
+    });
+    console.log(this.totalRemainMagicNumbers);
+  }
+
+  public getMagicTransferItems(level: number, profession: Profession): TransferItem[] {
+    let items = this.totalMagicTransferItems.get(level + profession.id);
     items = items ? items : [];
     return items;
   }
 
-  updateMagics(transferChanged: any) {
-    let originSelectedItems = this.role.magics;
-    let changedItems = _.map(transferChanged.list, 'key');
-    let magics = [];
-    if (transferChanged.to === 'left') {
-      magics = _.concat(originSelectedItems, _.difference(changedItems, originSelectedItems));
-    } else {
-      magics = _.filter(originSelectedItems, id => !changedItems.includes(id));
-    }
-    this.role.magics = magics;
+  public getRemainMagicNumber(level: number, professionId: string) {
+    let remainMagicNumbers = this.totalRemainMagicNumbers.get(level + professionId);
+    remainMagicNumbers = remainMagicNumbers ? remainMagicNumbers : 0;
+    return remainMagicNumbers;
   }
 
-  private getSelectableMagicTypes(): string[] {
-    let professionInfo = this.professionInfo;
-    let professionMagicTypes = _.map(this.role.professions, p => professionInfo.getInfo(p.id).magicType);
-    let magicTypes = _.filter(_.uniq(professionMagicTypes), e => !!e);
-    return magicTypes;
+  public updateMagics(level: number, profession: Profession, transferChanged: any) {
+    let originSelectedMagics = this.role.magics
+      .filter(item => item.profession === profession.id)
+      .map(item => item.id);
+    let changedItems = _.map(transferChanged.list, 'key');
+    let magics = this.role.magics.filter(item => item.profession !== profession.id);
+    let currentProfessionMagics = [];
+    if (transferChanged.to === 'left') {
+      currentProfessionMagics = _.difference(changedItems, originSelectedMagics);
+    } else {
+      currentProfessionMagics = originSelectedMagics.filter(item => !changedItems.includes(item));
+    }
+    this.role.magics = magics.concat(currentProfessionMagics.map(m => {
+      let magic = new Magic();
+      magic.id = m;
+      magic.profession = profession.id;
+      return magic;
+    }));
+
+    this.updateTotalRemainMagicNumbers();
+  }
+
+  public magicRange(profession: Profession): number[] {
+    let info = this.professionInfo.getInfo(profession.id);
+    let maxLevel = Math.min(profession.level, info.magicNumbers.length);
+    return _.range(0, info.magicNumbers[maxLevel].length);
   }
 
 }

@@ -45,7 +45,7 @@ export class RoleEditorComponent implements OnInit {
   armorTransferItems: TransferItem[];
   goodsTransferItems: TransferItem[];
 
-  magicProfessions: ProfessionInfoItem[] = [];
+  magicProfessions: Profession[] = [];
 
   constructor(private formBuilder: FormBuilder,
               private beliefInfo: BeliefInfo,
@@ -323,11 +323,10 @@ export class RoleEditorComponent implements OnInit {
     });
   }
 
-  private getMagicProfessions(): ProfessionInfoItem[] {
+  private getMagicProfessions(): Profession[] {
     let professionInfo = this.professionInfo;
     let professions = _.filter(this.role.professions, p => !!professionInfo.getInfo(p.id).magicType);
-    let magicProfessions = _.map(professions, p => professionInfo.getInfo(p.id));
-    return magicProfessions;
+    return professions;
   }
 
 }

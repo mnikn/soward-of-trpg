@@ -20,6 +20,7 @@ export interface ProfessionInfoItem extends BaseDnd3rInfoItem {
   hpDiceType: number;
   skillPointIncrement: number;
   magicType: string;
+  magicNumbers: number[][];
 }
 
 @Injectable({

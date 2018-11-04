@@ -1,8 +1,14 @@
 [
   {
+    "id": "CREATE_WATER",
+    "magicType": "DIVINE",
+    "level": 0,
+    "label": "造水术"
+  },
+  {
     "id": "ALARM",
     "magicType": "ARCANE",
-    "level": 1,
+    "level": 0,
     "label": "魔法警报"
   }
 ]

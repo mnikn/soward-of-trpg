@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import { Profession, ProfessionInfo, ProfessionInfoItem } from './profession';
 import { Skill } from './skill';
 import { Goods } from './goods';
-import { Magic } from './magic';
+import { Magic, MagicInfoItem } from './magic';
 
 export enum HpSettingsType {
   RADNOM,
@@ -33,7 +33,7 @@ export class Role {
   public armors: string[] = [];
   public goods: Goods[] = [];
 
-  public magics: string[] = [];
+  public magics: Magic[] = [];
 
   public getStr(): Ability {
     return _.find(this.abilities, {id: 'STRENGTH'});
