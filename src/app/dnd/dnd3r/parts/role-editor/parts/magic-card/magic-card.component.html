@@ -18,7 +18,7 @@
                   [nzListStyle]="{width: 45 + '%'}"
                   [nzDataSource]="getMagicTransferItems(magicLevel, profession)"
                   [nzTitles]="['已持有', '未持有']"
-                  (nzChange)="updateMagics(magicLevel, profession, $event)">
+                  (nzChange)="updateMagics($event)">
                 </nz-transfer>
               </nz-tab>
             </div>

@@ -51,7 +51,9 @@ export class MagicCardComponent implements OnInit {
     return magicInfoTransferItems.map(info => {
       let item: TransferItem = {
         key: info.id,
-        title: info.label
+        title: info.label,
+        level: info.level,
+        profession: profession.id
       };
       if (selectedMagics.map(e => e.id).includes(item.key)) {
         item.direction = 'left';
@@ -66,7 +68,6 @@ export class MagicCardComponent implements OnInit {
     _.forEach(this.magicProfessions, profession => {
       let professionInfo = this.professionInfo.getInfo(profession.id);
       let maxMagicLevel = Math.min(profession.level, professionInfo.magicNumbers.length);
-      console.log(maxMagicLevel);
       _.forEach(_.range(0, maxMagicLevel + 1), magicLevel => {
         let totalMagicNumber = professionInfo.magicNumbers[profession.level - 1][magicLevel];
         let selectedMagicNumber = this.role.magics.filter(item =>
@@ -75,7 +76,6 @@ export class MagicCardComponent implements OnInit {
         this.totalRemainMagicNumbers.set(magicLevel + profession.id, totalMagicNumber - selectedMagicNumber);
       });
     });
-    console.log(this.totalRemainMagicNumbers);
   }
 
   public getMagicTransferItems(level: number, profession: Profession): TransferItem[] {
@@ -90,24 +90,23 @@ export class MagicCardComponent implements OnInit {
     return remainMagicNumbers;
   }
 
-  public updateMagics(level: number, profession: Profession, transferChanged: any) {
-    let originSelectedMagics = this.role.magics
-      .filter(item => item.profession === profession.id)
-      .map(item => item.id);
-    let changedItems = _.map(transferChanged.list, 'key');
-    let magics = this.role.magics.filter(item => item.profession !== profession.id);
-    let currentProfessionMagics = [];
-    if (transferChanged.to === 'left') {
-      currentProfessionMagics = _.difference(changedItems, originSelectedMagics);
-    } else {
-      currentProfessionMagics = originSelectedMagics.filter(item => !changedItems.includes(item));
+  public updateMagics(transferChanged: any) {
+    if (!transferChanged.list || transferChanged.list.length === 0) {
+      return;
     }
-    this.role.magics = magics.concat(currentProfessionMagics.map(m => {
+
+    let selectedMagics = transferChanged.list.map(item => {
       let magic = new Magic();
-      magic.id = m;
-      magic.profession = profession.id;
+      magic.id = item.key;
+      magic.profession = item.profession;
       return magic;
-    }));
+    });
+    if (transferChanged.to === 'left') {
+      this.role.magics = _.concat(this.role.magics, selectedMagics);
+    } else {
+      let removedMagics = selectedMagics.map(item => item.id);
+      this.role.magics = _.filter(this.role.magics, item => !_.includes(removedMagics, item.id));
+    }
 
     this.updateTotalRemainMagicNumbers();
   }
