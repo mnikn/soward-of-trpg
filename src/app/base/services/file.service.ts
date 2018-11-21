@@ -3,6 +3,8 @@ import { Observable } from 'rxjs';
 
 declare const electron: any;
 const fs = electron.remote.require('fs');
+const ipc = electron.ipcRenderer;
+
 
 @Injectable({
   providedIn: 'root'
@@ -41,5 +43,14 @@ export class FileService {
 
   public readFileSync(path: string): any {
     return fs.readFileSync(path, 'utf8');
+  }
+
+  public showFileDialog(): Observable<string> {
+    return new Observable<string>(observer => {
+      ipc.send('save-dialog');
+      ipc.on('saved-file', function (event, path) {
+        observer.next(path);
+      });
+    });
   }
 }

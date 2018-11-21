@@ -7,13 +7,28 @@ import { RoleBuilder } from '../factory/role-builder';
 import * as _ from 'lodash';
 import { AbilityInfo } from '../models/ability';
 import { Skill } from '../models/skill';
-import { Profession } from '../models/profession';
+import { Profession, ProfessionInfo } from '../models/profession';
+import { SexInfo } from '../models/sex';
+import { RaceInfo } from '../models/race';
+import { AlignmentInfo } from '../models/alignment';
+import { LanguageInfo } from '../models/language';
+import { BeliefInfo } from '../models/belief';
+
+declare const electron: any;
+const fs = electron.remote.require('fs');
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoleFileService {
-  constructor(private baseFileService: FileService, private abilityInfo: AbilityInfo) {
+  constructor(private baseFileService: FileService,
+              private abilityInfo: AbilityInfo,
+              private raceInfo: RaceInfo,
+              private professionInfo: ProfessionInfo,
+              private alignmentInfo: AlignmentInfo,
+              private beliefInfo: BeliefInfo,
+              private languageInfo: LanguageInfo,
+              private sexInfo: SexInfo) {
   }
 
   public writeRoleFile(role: Role[]): Observable<boolean> {
@@ -54,6 +69,48 @@ export class RoleFileService {
           observer.next(roles);
           observer.complete();
         });
+    });
+  }
+
+  public toTxtFile(path: string, role: Role): Observable<string> {
+    return new Observable<string>((observer) => {
+      let data = `
+      -------------基本信息-------------\n
+      姓名：${role.name}\n
+      年龄：${role.age}\t体型：中型\n
+      性别：${this.sexInfo.getSex(role.sex).label}\t体重：130磅\n
+      种族：${this.raceInfo.getInfo(role.race).label}\t身高：150\n
+      职业：${role.professions.map(e => this.professionInfo.getInfo(e.id).label).join(',')}\n
+      阵营：${this.alignmentInfo.getAlignment(role.alignment).label}\n
+      信仰：${this.beliefInfo.getInfo(role.belief).label}\n
+      语言：${role.languages.map(e => this.languageInfo.getLanguage(e).label).join(',')}\n
+      \n\n
+      -------------属性-------------\n
+      力量：${role.abilities.find(e => e.id === 'STRENGTH').value}\n
+      敏捷：${role.abilities.find(e => e.id === 'DEXTERITY').value}\n
+      体质：${role.abilities.find(e => e.id === 'CONSTITUTION').value}\n
+      智力：${role.abilities.find(e => e.id === 'WISDOM').value}\n
+      感知：${role.abilities.find(e => e.id === 'INTELLIGENCE').value}\n
+      魅力：${role.abilities.find(e => e.id === 'CHARISMA').value}\n
+      总等级：${role.professions.reduce((result, curr) => result + curr.level, 0)}级\n
+      ${role.professions.map(e => this.professionInfo.getInfo(e.id).label + '：' + e.level + '级').join('\t')}\n
+      最大生命值：${role.maxHp}\t当前生命值：${role.maxHp}\n
+      -------------装备-------------\n
+      -------------物品-------------\n
+      `;
+      if (!!role.professions.find(e => !!this.professionInfo.getInfo(e.id).magicType)) {
+        data += `
+        -------------法术-------------\n
+        `;
+      }
+      data += `
+      -------------简介-------------\n
+      ${role.description}
+      `;
+      fs.writeFile(path, data, 'utf8', () => {
+        observer.next(data);
+        observer.complete();
+      });
     });
   }
 }
