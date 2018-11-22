@@ -4,9 +4,10 @@ import { Profession, ProfessionInfo, ProfessionInfoItem } from './profession';
 import { Skill } from './skill';
 import { Goods } from './goods';
 import { Magic, MagicInfoItem } from './magic';
+import { Weapon } from './weapon';
 
 export enum HpSettingsType {
-  RADNOM,
+  RANDOM,
   FULL,
   HALF,
   CUSTOM

@@ -42,7 +42,7 @@ export class RoleDataService {
       let id = _.last(self._roles) ? _.last(self._roles).id + 1 : 1;
       let role = builder
         .setId(id)
-        .setHp(HpSettingsType.RADNOM)
+        .setHp(HpSettingsType.RANDOM)
         .setSkills(this.skillInfo.getSkills().map(e => new Skill(e.id)))
         .setBasicsInfo(`人物${id}`, 18, '一个战士')
         .build();

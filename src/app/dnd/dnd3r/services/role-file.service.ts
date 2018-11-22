@@ -12,6 +12,7 @@ import { RaceInfo } from '../models/race';
 import { AlignmentInfo } from '../models/alignment';
 import { LanguageInfo } from '../models/language';
 import { BeliefInfo } from '../models/belief';
+import { WeaponInfo } from '../models/weapon';
 
 declare const electron: any;
 const fs = electron.remote.require('fs');
@@ -26,6 +27,7 @@ export class RoleFileService {
               private alignmentInfo: AlignmentInfo,
               private beliefInfo: BeliefInfo,
               private languageInfo: LanguageInfo,
+              private weaponInfo: WeaponInfo,
               private sexInfo: SexInfo) {
   }
 
@@ -71,17 +73,18 @@ export class RoleFileService {
   }
 
   public toTxtFile(path: string, role: Role): Observable<string> {
+    let weapons = role.weapons.map(e => this.weaponInfo.getWeaponInfo(e));
     return new Observable<string>((observer) => {
       let data = `
       -------------基本信息-------------\n
       姓名：${role.name}\n
       年龄：${role.age}\t体型：中型\n
-      性别：${this.sexInfo.getSex(role.sex).label}\t体重：130磅\n
-      种族：${this.raceInfo.getInfo(role.race).label}\t身高：150\n
+      性别：${_.get(this.sexInfo.getSex(role.sex), 'label')}\n
+      种族：${_.get(this.raceInfo.getInfo(role.race), 'label')}\n
       职业：${role.professions.map(e => this.professionInfo.getInfo(e.id).label).join(',')}\n
-      阵营：${this.alignmentInfo.getAlignment(role.alignment).label}\n
-      信仰：${this.beliefInfo.getInfo(role.belief).label}\n
-      语言：${role.languages.map(e => this.languageInfo.getLanguage(e).label).join(',')}\n
+      阵营：${_.get(this.alignmentInfo.getAlignment(role.alignment), 'label')}\n
+      信仰：${_.get(this.beliefInfo.getInfo(role.belief), 'label')}\n
+      语言：${role.languages.map(e => _.get(this.languageInfo.getLanguage(e), 'label')).join(',')}\n
       \n\n
       -------------属性-------------\n
       力量：${role.str.value}\n
@@ -91,9 +94,21 @@ export class RoleFileService {
       感知：${role.int.value}\n
       魅力：${role.cha.value}\n
       总等级：${role.professions.reduce((result, curr) => result + curr.level, 0)}级\n
-      ${role.professions.map(e => this.professionInfo.getInfo(e.id).label + '：' + e.level + '级').join('\t')}\n
+      ${role.professions.map(e => _.get(this.professionInfo.getInfo(e.id), 'label') + '：' + e.level + '级').join('\t')}\n
       最大生命值：${role.maxHp}\t当前生命值：${role.maxHp}\n
-      -------------装备-------------\n
+      -------------武器-------------\n
+      装备武器\t\t\t握持手\t\t\t攻击次数\t\t\t重击骰\t\t\t重击威力\t\t\t射程距离\t\t\t伤害类型
+      ${weapons.map(e =>
+        e.label + '\t\t\t' +
+        e.holdWeaponType + '\t\t\t' +
+        e.damageDiceNumber + '\t\t\t' +
+        e.damageDiceType + '\t\t\t' +
+        e.damageDiceType + '\t\t\t' +
+        e.range + '\t\t\t' +
+        e.damageType + '\t\t\t' +
+        '\n'
+      )}
+      -------------防具-------------\n
       -------------物品-------------\n
       `;
       if (!!role.professions.find(e => !!this.professionInfo.getInfo(e.id).magicType)) {

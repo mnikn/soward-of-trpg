@@ -1,18 +1,22 @@
 [
   {
     "id": "SHORT_SWORD",
+    "holdWeaponType": "SINGLE_HAND",
     "label": "短剑",
     "description": "短剑是常见的副手武器",
     "damageDiceNumber": 1,
     "damageDiceType": 4,
+    "range": null,
     "damageType": "PUNCTURE"
   },
   {
     "id": "LIGHT_CROSSBOW",
+    "holdWeaponType": "TWO_HAND",
     "label": "轻弩",
     "description": "你必须用扳动把手才能拉紧弩弦。装填轻型弩视为移动动作，会引发借机攻击。一般而言，操作轻型弩需要两只手。然而，虽然无法装填，你还是可以用单手发射轻型弩 ，但在攻击检定上会受到‐2减值。如果两手分别射击两组轻型弩，则须受到双武器战斗的减值。此减值会与单手发射轻型弩的减值累计",
     "damageDiceNumber": 1,
     "damageDiceType": 6,
+    "range": 100,
     "damageType": "PUNCTURE"
   }
 ]

@@ -173,7 +173,7 @@ export class RoleEditorComponent implements OnInit {
         colSpan: 4,
         onChange: (value: number) => {
           let maxHp = this.role.maxHp;
-          if (this.role.hpSettingsType === HpSettingsType.RADNOM) {
+          if (this.role.hpSettingsType === HpSettingsType.RANDOM) {
             maxHp += this.calculateService.calculateAbilityModifier(value) - this.role.con.getModifier();
             this.role.con.value = value;
           } else {

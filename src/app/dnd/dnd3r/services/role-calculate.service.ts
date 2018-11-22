@@ -14,7 +14,7 @@ export class RoleCalculateService {
 
   public calculateMaxHp(role: Role) {
     switch (role.hpSettingsType) {
-      case HpSettingsType.RADNOM:
+      case HpSettingsType.RANDOM:
         return role.professions.reduce((result, profession) => {
           return result + (Math.ceil(Math.random() * this.professionInfo.getInfo(profession.id).hpDiceType) +
             role.con.getModifier()) *
