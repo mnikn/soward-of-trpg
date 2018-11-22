@@ -17,19 +17,19 @@ export class RoleCalculateService {
       case HpSettingsType.RADNOM:
         return role.professions.reduce((result, profession) => {
           return result + (Math.ceil(Math.random() * this.professionInfo.getInfo(profession.id).hpDiceType) +
-            role.getCon().getModifier()) *
+            role.con.getModifier()) *
             profession.level;
         }, 0);
       case HpSettingsType.FULL:
         return role.professions.reduce((result, profession) => {
           return result + (this.professionInfo.getInfo(profession.id).hpDiceType +
-            role.getCon().getModifier()) *
+            role.con.getModifier()) *
             profession.level;
         }, 0);
       case HpSettingsType.HALF:
         return role.professions.reduce((result, profession) => {
           return result + (this.professionInfo.getInfo(profession.id).hpDiceType / 2 +
-            role.getCon().getModifier()) *
+            role.con.getModifier()) *
             profession.level;
         }, 0);
       case HpSettingsType.CUSTOM:

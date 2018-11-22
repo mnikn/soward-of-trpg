@@ -13,6 +13,14 @@ export class Profession {
     this.level = level;
     this.isMainProfession = isMainProfession;
   }
+
+  public toJsonData(): any {
+    return {
+      id: this.id,
+      level: this.level,
+      isMainProfession: this.isMainProfession
+    };
+  }
 }
 
 export interface ProfessionInfoItem extends BaseDnd3rInfoItem {

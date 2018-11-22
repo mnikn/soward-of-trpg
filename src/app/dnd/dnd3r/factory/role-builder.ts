@@ -20,8 +20,13 @@ export class RoleBuilder {
     return this;
   }
 
-  public setAbilities(abilities: Ability[]) {
-    this._role.abilities = abilities;
+  public setAbilities(abilities: any) {
+    this._role.str.value = abilities.str;
+    this._role.dex.value = abilities.dex;
+    this._role.con.value = abilities.con;
+    this._role.int.value = abilities.int;
+    this._role.cha.value = abilities.cha;
+    this._role.wis.value = abilities.wis;
     return this;
   }
 

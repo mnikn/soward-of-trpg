@@ -11,6 +11,13 @@ export class Goods {
     this.id = id;
     this.number = number;
   }
+
+  public toJsonData(): any {
+    return {
+      id: this.id,
+      number: this.number
+    };
+  }
 }
 
 export interface IGoodsInfo {

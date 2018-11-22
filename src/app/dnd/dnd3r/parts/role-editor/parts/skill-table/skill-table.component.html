@@ -4,7 +4,7 @@
       <div style="margin-bottom: 16px">
         剩余技能点：
         <nz-input-number
-          [ngModel]="calculateService.calculateProfessionRemainSkillPoint(profession,role.getInt().getModifier(), role.skills)"
+          [ngModel]="calculateService.calculateProfessionRemainSkillPoint(profession,role.int.getModifier(), role.skills)"
           ngDefaultControl="true" [nzDisabled]="true">
         </nz-input-number>
       </div>

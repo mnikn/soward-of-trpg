@@ -5,9 +5,8 @@ import { AppContext } from '../../../base/constants/app-context';
 import { Role } from '../models/role';
 import { RoleBuilder } from '../factory/role-builder';
 import * as _ from 'lodash';
-import { AbilityInfo } from '../models/ability';
 import { Skill } from '../models/skill';
-import { Profession, ProfessionInfo } from '../models/profession';
+import { ProfessionInfo } from '../models/profession';
 import { SexInfo } from '../models/sex';
 import { RaceInfo } from '../models/race';
 import { AlignmentInfo } from '../models/alignment';
@@ -22,7 +21,6 @@ const fs = electron.remote.require('fs');
 })
 export class RoleFileService {
   constructor(private baseFileService: FileService,
-              private abilityInfo: AbilityInfo,
               private raceInfo: RaceInfo,
               private professionInfo: ProfessionInfo,
               private alignmentInfo: AlignmentInfo,
@@ -32,7 +30,7 @@ export class RoleFileService {
   }
 
   public writeRoleFile(role: Role[]): Observable<boolean> {
-    let toWriteData = JSON.stringify(role);
+    let toWriteData = JSON.stringify(role.map(e => e.toJsonData()));
     return this.baseFileService.writeFile(AppContext.DND3R_ROLE_PATH, toWriteData);
   }
 
@@ -50,7 +48,7 @@ export class RoleFileService {
             let builder = new RoleBuilder();
             return builder
               .setId(roleData.id)
-              .setAbilities(this.abilityInfo.createAbilities(roleData.abilities))
+              .setAbilities(roleData.abilities)
               .setHp(roleData.hpSettingsType, roleData.maxHp)
               .setBasicsInfo(roleData.name, roleData.age, roleData.description)
               .setProfessions(roleData.professions)
@@ -86,12 +84,12 @@ export class RoleFileService {
       语言：${role.languages.map(e => this.languageInfo.getLanguage(e).label).join(',')}\n
       \n\n
       -------------属性-------------\n
-      力量：${role.abilities.find(e => e.id === 'STRENGTH').value}\n
-      敏捷：${role.abilities.find(e => e.id === 'DEXTERITY').value}\n
-      体质：${role.abilities.find(e => e.id === 'CONSTITUTION').value}\n
-      智力：${role.abilities.find(e => e.id === 'WISDOM').value}\n
-      感知：${role.abilities.find(e => e.id === 'INTELLIGENCE').value}\n
-      魅力：${role.abilities.find(e => e.id === 'CHARISMA').value}\n
+      力量：${role.str.value}\n
+      敏捷：${role.dex.value}\n
+      体质：${role.con.value}\n
+      智力：${role.wis.value}\n
+      感知：${role.int.value}\n
+      魅力：${role.cha.value}\n
       总等级：${role.professions.reduce((result, curr) => result + curr.level, 0)}级\n
       ${role.professions.map(e => this.professionInfo.getInfo(e.id).label + '：' + e.level + '级').join('\t')}\n
       最大生命值：${role.maxHp}\t当前生命值：${role.maxHp}\n

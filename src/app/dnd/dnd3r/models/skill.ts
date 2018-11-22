@@ -14,6 +14,13 @@ export class Skill {
     }
     this.professionsAssignedPoint = professionsAssignedPoint;
   }
+
+  public toJsonData(): any {
+    return {
+      id: this.id,
+      professionsAssignedPoint: this.professionsAssignedPoint
+    };
+  }
 }
 
 export interface ISkillInfo {

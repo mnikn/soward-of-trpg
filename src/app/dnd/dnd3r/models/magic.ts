@@ -6,6 +6,13 @@ import { BaseDnd3rInfoData, BaseDnd3rInfoItem } from './base-dnd3r-info-data';
 export class Magic {
   id: string;
   profession: string;
+
+  public toJsonData(): any {
+    return {
+      id: this.id,
+      profession: this.profession
+    };
+  }
 }
 
 export interface MagicInfoItem extends BaseDnd3rInfoItem {

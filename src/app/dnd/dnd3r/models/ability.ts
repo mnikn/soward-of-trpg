@@ -2,12 +2,11 @@ import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
 import { FileService } from '../../../base/services/file.service';
 
+
 export class Ability {
-  public id: string;
   public value: number;
 
-  constructor(id: string, value: number = 8) {
-    this.id = id;
+  constructor(value: number = 8) {
     this.value = value;
   }
 
@@ -16,9 +15,55 @@ export class Ability {
   }
 }
 
-export interface IAbilityInfo {
-  id: string;
-  label: string;
+export class Strength extends Ability {
+  public static label = '力量';
+
+  constructor(value: number = 8) {
+    super(value);
+  }
+}
+
+
+export class Dexterity extends Ability {
+  public static label = '敏捷';
+
+  constructor(value: number = 8) {
+    super(value);
+  }
+}
+
+
+export class Constitution extends Ability {
+  public static label = '体质';
+
+  constructor(value: number = 8) {
+    super(value);
+  }
+}
+
+
+export class Wisdom extends Ability {
+  public static label = '感知';
+
+  constructor(value: number = 8) {
+    super(value);
+  }
+}
+
+export class Intelligence extends Ability {
+  public static label = '智力';
+
+  constructor(value: number = 8) {
+    super(value);
+  }
+}
+
+export class Charisma extends Ability {
+  public static label = '魅力';
+
+  constructor(value: number = 8) {
+    super(value);
+  }
 }
 
 @Injectable({
@@ -26,64 +71,20 @@ export interface IAbilityInfo {
 })
 export class AbilityInfo {
 
-
-  public abilities = {
-    STRENGTH: {
-      id: 'STRENGTH',
-      label: '力量'
-    },
-    DEXTERITY: {
-      id: 'DEXTERITY',
-      label: '敏捷'
-    },
-    CONSTITUTION: {
-      id: 'CONSTITUTION',
-      label: '体质'
-    },
-    WISDOM: {
-      id: 'WISDOM',
-      label: '感知'
-    },
-    INTELLIGENCE: {
-      id: 'INTELLIGENCE',
-      label: '智力'
-    },
-    CHARISMA: {
-      id: 'CHARISMA',
-      label: '魅力'
+  public getAbility(id: string): any {
+    switch (id) {
+      case 'STRENGTH':
+        return Strength;
+      case 'DEXTERITY':
+        return Dexterity;
+      case 'CONSTITUTION':
+        return Constitution;
+      case 'WISDOM':
+        return Wisdom;
+      case 'INTELLIGENCE':
+        return Intelligence;
+      case 'CHARISMA':
+        return Charisma;
     }
-  };
-
-  constructor(private fileService: FileService) {
-  }
-
-  public getAbility(id: string): IAbilityInfo {
-    return _.find(this.abilities, {id: id});
-  }
-
-  public createAbilities(data: any = [{
-    id: this.abilities.STRENGTH.id
-  }, {
-    id: this.abilities.DEXTERITY.id
-  }, {
-    id: this.abilities.INTELLIGENCE.id
-  }, {
-    id: this.abilities.CHARISMA.id
-  }, {
-    id: this.abilities.CONSTITUTION.id
-  }, {
-    id: this.abilities.WISDOM.id
-  }]): Ability[] {
-    let abilities: Ability[] = [];
-    _.forEach(data, (ability) => {
-      abilities.push(new Ability(ability.id, ability.value));
-    });
-    // abilities.push(new Ability('STRENGTH', data.str));
-    // abilities.push(new Ability('DEXTERITY', data.dex));
-    // abilities.push(new Ability('CONSTITUTION', data.con));
-    // abilities.push(new Ability('WISDOM', data.wis));
-    // abilities.push(new Ability('INTELLIGENCE', data.int));
-    // abilities.push(new Ability('CHARISMA', data.cha));
-    return abilities;
   }
 }

@@ -6,19 +6,15 @@ import { SexInfo } from '../../models/sex';
 import { BeliefInfo } from '../../models/belief';
 import { RaceInfo } from '../../models/race';
 import { LanguageInfo } from '../../models/language';
-import { Profession, ProfessionInfo, ProfessionInfoItem } from '../../models/profession';
+import { Profession, ProfessionInfo } from '../../models/profession';
 import { ToolButton } from '../../../../base/components/tool-button/tool-button';
 import { ProfessionDrawerComponent } from './parts/profession-drawer/profession-drawer.component';
 import * as _ from 'lodash';
-import { AbilityInfo } from '../../models/ability';
 import { FormControl } from '../../../../base/components/form/form-control';
 import { HpSettingsModalComponent } from './parts/hp-settings-modal/hp-settings-modal.component';
 import { RoleCalculateService } from '../../services/role-calculate.service';
 import { SkillInfo } from '../../models/skill';
-import { WeaponInfo } from '../../models/weapon';
-import { TransferItem } from 'ng-zorro-antd';
-import { ArmorInfo } from '../../models/armor';
-import { Goods, GoodsInfo } from '../../models/goods';
+import { Charisma, Constitution, Dexterity, Intelligence, Strength, Wisdom } from '../../models/ability';
 
 @Component({
   selector: 'app-dnd3r-role-editor',
@@ -50,7 +46,6 @@ export class RoleEditorComponent implements OnInit {
               private raceInfo: RaceInfo,
               private languageInfo: LanguageInfo,
               private alignmentInfo: AlignmentInfo,
-              public abilityInfo: AbilityInfo,
               public skillInfo: SkillInfo,
               private calculateService: RoleCalculateService) {
   }
@@ -152,37 +147,37 @@ export class RoleEditorComponent implements OnInit {
       {
         id: 'str',
         type: 'number',
-        label: '力量',
+        label: Strength.label,
         placeholder: '请输入力量...',
-        value: this.role.getStr().value,
+        value: this.role.str.value,
         colSpan: 4,
         onChange: (value: number) => {
-          this.role.getStr().value = value;
+          this.role.str.value = value;
         }
       }, {
         id: 'dex',
         type: 'number',
-        label: '敏捷',
+        label: Dexterity.label,
         placeholder: '请输入敏捷...',
-        value: this.role.getDex().value,
+        value: this.role.dex.value,
         colSpan: 4,
         onChange: (value: number) => {
-          this.role.getDex().value = value;
+          this.role.dex.value = value;
         }
       }, {
         id: 'con',
         type: 'number',
-        label: '体质',
+        label: Constitution.label,
         placeholder: '请输入体质...',
-        value: this.role.getCon().value,
+        value: this.role.con.value,
         colSpan: 4,
         onChange: (value: number) => {
           let maxHp = this.role.maxHp;
           if (this.role.hpSettingsType === HpSettingsType.RADNOM) {
-            maxHp += this.calculateService.calculateAbilityModifier(value) - this.role.getCon().getModifier();
-            this.role.getCon().value = value;
+            maxHp += this.calculateService.calculateAbilityModifier(value) - this.role.con.getModifier();
+            this.role.con.value = value;
           } else {
-            this.role.getCon().value = value;
+            this.role.con.value = value;
             maxHp = this.calculateService.calculateMaxHp(this.role);
           }
           this.updateMaxHp(maxHp);
@@ -190,32 +185,32 @@ export class RoleEditorComponent implements OnInit {
       }, {
         id: 'wis',
         type: 'number',
-        label: '意志',
+        label: Wisdom.label,
         placeholder: '请输入意志...',
-        value: this.role.getWis().value,
+        value: this.role.wis.value,
         colSpan: 4,
         onChange: (value: number) => {
-          this.role.getWis().value = value;
+          this.role.wis.value = value;
         }
       }, {
         id: 'int',
         type: 'number',
-        label: this.abilityInfo.abilities.INTELLIGENCE.label,
+        label: Intelligence.label,
         placeholder: '请输入智力...',
-        value: this.role.getInt().value,
+        value: this.role.int.value,
         colSpan: 4,
         onChange: (value: number) => {
-          this.role.getInt().value = value;
+          this.role.int.value = value;
         }
       }, {
         id: 'cha',
         type: 'number',
-        label: this.abilityInfo.abilities.CHARISMA.label,
+        label: Charisma.label,
         placeholder: '请输入魅力...',
-        value: this.role.getCha().value,
+        value: this.role.cha.value,
         colSpan: 4,
         onChange: (value: number) => {
-          this.role.getCha().value = value;
+          this.role.cha.value = value;
         }
       }, {
         id: 'maxHp',
