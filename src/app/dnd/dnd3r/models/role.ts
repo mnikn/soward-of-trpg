@@ -1,10 +1,8 @@
-import { Ability, Charisma, Constitution, Dexterity, Intelligence, Strength, Wisdom } from './ability';
-import * as _ from 'lodash';
-import { Profession, ProfessionInfo, ProfessionInfoItem } from './profession';
+import { Charisma, Constitution, Dexterity, Intelligence, Strength, Wisdom } from './ability';
+import { Profession } from './profession';
 import { Skill } from './skill';
 import { Goods } from './goods';
-import { Magic, MagicInfoItem } from './magic';
-import { Weapon } from './weapon';
+import { Magic } from './magic';
 
 export enum HpSettingsType {
   RANDOM,

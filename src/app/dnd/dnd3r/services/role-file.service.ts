@@ -13,6 +13,7 @@ import { AlignmentInfo } from '../models/alignment';
 import { LanguageInfo } from '../models/language';
 import { BeliefInfo } from '../models/belief';
 import { WeaponInfo } from '../models/weapon';
+import { MagicInfo } from '../models/magic';
 
 declare const electron: any;
 const fs = electron.remote.require('fs');
@@ -28,6 +29,7 @@ export class RoleFileService {
               private beliefInfo: BeliefInfo,
               private languageInfo: LanguageInfo,
               private weaponInfo: WeaponInfo,
+              private magicInfo: MagicInfo,
               private sexInfo: SexInfo) {
   }
 
@@ -97,14 +99,14 @@ export class RoleFileService {
       ${role.professions.map(e => _.get(this.professionInfo.getInfo(e.id), 'label') + '：' + e.level + '级').join('\t')}\n
       最大生命值：${role.maxHp}\t当前生命值：${role.maxHp}\n
       -------------武器-------------\n
-      装备武器\t\t\t握持手\t\t\t攻击次数\t\t\t重击骰\t\t\t重击威力\t\t\t射程距离\t\t\t伤害类型
+      装备武器\t\t\t握持手\t\t\t攻击次数\t\t\t基本伤害\t\t\t重击骰\t\t\t重击威力\t\t\t射程距离\t\t\t伤害类型\n
       ${weapons.map(e =>
         e.label + '\t\t\t' +
         e.holdWeaponType + '\t\t\t' +
         e.damageDiceNumber + '\t\t\t' +
         e.damageDiceType + '\t\t\t' +
-        e.damageDiceType + '\t\t\t' +
-        e.range + '\t\t\t' +
+        e.critDamage + '\t\t\t' +
+        (e.range ? e.range : 'N/A') + '\t\t\t' +
         e.damageType + '\t\t\t' +
         '\n'
       )}
@@ -113,7 +115,7 @@ export class RoleFileService {
       `;
       if (!!role.professions.find(e => !!this.professionInfo.getInfo(e.id).magicType)) {
         data += `
-        -------------法术-------------\n
+      -------------法术-------------\n
         `;
       }
       data += `

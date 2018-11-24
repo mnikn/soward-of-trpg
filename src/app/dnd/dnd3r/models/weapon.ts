@@ -11,6 +11,7 @@ export interface Weapon {
   damageDiceNumber: number;
   damageDiceType: number;
   range: number;
+  critDamage: number;
   damageType: string;
 }
 

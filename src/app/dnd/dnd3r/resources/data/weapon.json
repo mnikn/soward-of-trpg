@@ -7,7 +7,8 @@
     "damageDiceNumber": 1,
     "damageDiceType": 4,
     "range": null,
-    "damageType": "PUNCTURE"
+    "damageType": "PUNCTURE",
+    "critDamage": 20
   },
   {
     "id": "LIGHT_CROSSBOW",
@@ -17,6 +18,7 @@
     "damageDiceNumber": 1,
     "damageDiceType": 6,
     "range": 100,
+    "critDamage": 20,
     "damageType": "PUNCTURE"
   }
 ]
